@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Parkour - Geometry Dash Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        #gameContainer {
+            position: relative;
+            width: 900px;
+            height: 500px;
+        }
+        #gameCanvas {
+            background: linear-gradient(to bottom, #1a0a2e 0%, #0a0a1a 50%, #0f1a2e 100%);
+            border: 3px solid #00ff88;
+            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+            display: block;
+        }
+        #startScreen, #questionScreen, #gameOverScreen, #successScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(10, 10, 26, 0.95);
+            border-radius: 4px;
+            z-index: 10;
+        }
+        #startScreen h1 {
+            color: #00ff88;
+            font-size: 56px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+            letter-spacing: 4px;
+        }
+        #startScreen h2 {
+            color: #ff6b6b;
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+        .topic-icons {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #0a0a1a;
+            border: none;
+            padding: 15px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+        }
+        #gameOverScreen {
+            display: none;
+        }
+        #gameOverScreen h1 {
+            color: #ff4757;
+            font-size: 56px;
+            text-shadow: 0 0 30px rgba(255, 71, 87, 0.8);
+        }
+        .stats {
+            color: white;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .difficulty-indicator {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #00ff88;
+            font-size: 14px;
+            z-index: 5;
+        }
+        #difficultyBar {
+            width: 120px;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #00ff88;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        #difficultyFill {
+            height: 100%;
+            background: #00ff88;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        .score-display {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            color: #00ff88;
+            font-size: 18px;
+            z-index: 5;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        .result-message {
+            margin-top: 20px;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            animation: fadeIn 0.5s;
+        }
+        .result-message.easier {
+            background: rgba(0, 255, 136, 0.2);
+            border: 2px solid #00ff88;
+            color: #00ff88;
+        }
+        .result-message.harder {
+            background: rgba(255, 71, 87, 0.2);
+            border: 2px solid #ff4757;
+            color: #ff4757;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .instructions {
+            color: #888;
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .instructions span {
+            color: #00ff88;
+        }
+        .level-select {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .level-btn {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 204, 106, 0.2));
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 15px 30px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 200px;
+        }
+        .level-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.4), rgba(0, 204, 106, 0.4));
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+        .level-name {
+            color: #00ff88;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .level-desc {
+            color: #888;
+            font-size: 12px;
+        }
+        #questionScreen, #successScreen {
+            display: none;
+        }
+        .question-box {
+            background: linear-gradient(135deg, #1a0a2e, #0f1a2e);
+            border: 3px solid #00ff88;
+            border-radius: 15px;
+            padding: 30px 40px;
+            max-width: 700px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+        }
+        .question-box.wrong-bg {
+            background: linear-gradient(135deg, #300a0a, #200505);
+            border-color: #ff4757;
+            box-shadow: 0 0 40px rgba(255,71,87,0.4);
+        }
+        .question-topic {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+        .question-text {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option-btn {
+            background: rgba(0, 255, 136, 0.1);
+            color: white;
+            border: 2px solid #00ff88;
+            padding: 15px 25px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .option-btn:hover {
+            background: #00ff88;
+            color: #0a0a1a;
+        }
+        .option-btn.correct {
+            background: #00ff88;
+            color: #0a0a1a;
+            animation: pulse 0.5s;
+        }
+        .option-btn.wrong {
+            background: #ff4757;
+            border-color: #ff4757;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        #gameOverScreen h1 {
+            color: #ff4757;
+            font-size: 56px;
+            text-shadow: 0 0 30px rgba(255, 71, 87, 0.8);
+        }
+        #successScreen h1 {
+            color: #00ff88;
+            font-size: 56px;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="900" height="500"></canvas>
+        
+        <div class="score-display">
+            <span id="scoreDisplay">Score: 0</span>
+            <span id="speedDisplay" style="margin-left: 20px;">Speed: 50%</span>
+        </div>
+        
+        <div class="difficulty-indicator">
+            <div>Difficulty</div>
+            <div id="difficultyBar"><div id="difficultyFill" style="width: 50%"></div></div>
+        </div>
+        
+        <div id="startScreen">
+            <h1>GLOBAL PARKOUR</h1>
+            <h2>Geometry Dash Style</h2>
+            <div class="topic-icons">🍎 🌍 🌱</div>
+            <div class="level-select">
+                <h3 style="color: #00ff88; margin-bottom: 20px;">Select Level</h3>
+                <button class="level-btn" onclick="startGame('easy')">
+                    <div class="level-name">🌱 EASY</div>
+                    <div class="level-desc">Slower speed, wider gaps</div>
+                </button>
+                <button class="level-btn" onclick="startGame('normal')">
+                    <div class="level-name">⚡ NORMAL</div>
+                    <div class="level-desc">Balanced difficulty</div>
+                </button>
+                <button class="level-btn" onclick="startGame('hard')">
+                    <div class="level-name">🔥 HARD</div>
+                    <div class="level-desc">Faster speed, tighter gaps</div>
+                </button>
+                <button class="level-btn" onclick="startGame('insane')">
+                    <div class="level-name">💀 INSANE</div>
+                    <div class="level-desc">Maximum challenge!</div>
+                </button>
+            </div>
+            <div class="instructions">
+                <span>SPACE</span> or <span>W</span> or <span>UP</span> to jump<br>
+                One-hit death! Don't touch anything!
+            </div>
+        </div>
+        
+        <div id="questionScreen">
+            <div class="question-box" id="qBox">
+                <div class="question-topic" id="questionTopic"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="result-message" id="resultMessage" style="display:none;"></div>
+                <button class="btn" id="continueBtn" style="display:none; margin-top:20px;" onclick="continueAfterQuestion()">Continue</button>
+            </div>
+        </div>
+        
+        <div id="successScreen">
+            <h1>CORRECT!</h1>
+            <div class="result-message easier" id="successMessage">Next section is easier!</div>
+            <button class="btn" onclick="continueAfterQuestion()" style="margin-top:30px;">Continue</button>
+        </div>
+        
+        <div id="gameOverScreen">
+            <h1>GAME OVER</h1>
+            <div class="stats">
+                <div>Score: <span id="finalScore">0</span></div>
+            </div>
+            <button class="btn" onclick="restartGame()">Retry</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Questions Database (60 questions)
+        const questions = [
+            // Food Waste (20)
+            { topic: "🍎 Food Waste", question: "True or False: Food waste in landfills can produce methane gas.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which of these helps reduce food waste?", answer: "Composting", options: ["Throwing leftovers away", "Composting", "Buying extra food", "Burning food"] },
+            { topic: "🍎 Food Waste", question: "True or False: One-third of food produced globally is wasted.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which place creates food waste?", answer: "All of the above", options: ["Homes", "Restaurants", "Supermarkets", "All of the above"] },
+            { topic: "🍎 Food Waste", question: "True or False: Composting turns food scraps into useful soil material.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which gas is produced when food rots in landfills?", answer: "Methane", options: ["Oxygen", "Nitrogen", "Methane", "Helium"] },
+            { topic: "🍎 Food Waste", question: "True or False: Wasting food also wastes water and energy.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which item is best for composting?", answer: "Banana peel", options: ["Plastic bottle", "Banana peel", "Metal can", "Glass jar"] },
+            { topic: "🍎 Food Waste", question: "True or False: 'Best before' dates always mean food is unsafe after that date.", answer: "False", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which action helps reduce food waste at home?", answer: "Meal planning", options: ["Buying too much food", "Ignoring leftovers", "Meal planning", "Throwing away fruits early"] },
+            { topic: "🍎 Food Waste", question: "True or False: Food waste can increase landfill pollution.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which is NOT a result of food waste?", answer: "Cleaner landfills", options: ["Wasted water", "Wasted electricity", "Cleaner landfills", "Greenhouse gases"] },
+            { topic: "🍎 Food Waste", question: "True or False: Restaurants can also create food waste.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "What can people do with extra edible food?", answer: "Donate it", options: ["Donate it", "Burn it", "Throw it in rivers", "Hide it"] },
+            { topic: "🍎 Food Waste", question: "True or False: Composting is better for the environment than landfilling food.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which food is commonly wasted?", answer: "Fruits and vegetables", options: ["Fruits and vegetables", "Rocks", "Sand", "Plastic"] },
+            { topic: "🍎 Food Waste", question: "True or False: Food waste has no effect on climate change.", answer: "False", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "What is a landfill?", answer: "A place where waste is buried", options: ["A place where waste is buried", "A solar farm", "A forest", "A recycling robot"] },
+            { topic: "🍎 Food Waste", question: "True or False: Saving leftovers can reduce food waste.", answer: "True", options: ["True", "False"] },
+            { topic: "🍎 Food Waste", question: "Which resource is wasted when food is wasted?", answer: "All of the above", options: ["Water", "Energy", "Fuel", "All of the above"] },
+            
+            // Climate Change (20)
+            { topic: "🌍 Climate Change", question: "True or False: Climate change is mainly caused by human activities today.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which fuel is a fossil fuel?", answer: "Coal", options: ["Coal", "Wind", "Solar", "Water"] },
+            { topic: "🌍 Climate Change", question: "True or False: Greenhouse gases trap heat in Earth's atmosphere.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which gas is most linked to climate change?", answer: "Carbon dioxide", options: ["Oxygen", "Carbon dioxide", "Helium", "Neon"] },
+            { topic: "🌍 Climate Change", question: "True or False: Cutting down forests can worsen climate change.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which energy source is renewable?", answer: "Solar", options: ["Oil", "Coal", "Solar", "Gasoline"] },
+            { topic: "🌍 Climate Change", question: "True or False: Climate change can cause stronger storms.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which transportation choice can reduce emissions?", answer: "Riding a bicycle", options: ["Riding a bicycle", "Driving alone everywhere", "Burning trash", "Flying short distances daily"] },
+            { topic: "🌍 Climate Change", question: "True or False: Methane is a greenhouse gas.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which activity releases large amounts of carbon dioxide?", answer: "Burning fossil fuels", options: ["Burning fossil fuels", "Reading books", "Swimming", "Recycling paper"] },
+            { topic: "🌍 Climate Change", question: "True or False: Climate change can affect wildlife habitats.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which is an effect of climate change?", answer: "All of the above", options: ["Floods", "Heat waves", "Droughts", "All of the above"] },
+            { topic: "🌍 Climate Change", question: "True or False: Renewable energy can help reduce climate change.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which is an example of renewable energy?", answer: "Wind power", options: ["Wind power", "Coal", "Diesel", "Oil"] },
+            { topic: "🌍 Climate Change", question: "True or False: Electric vehicles can help reduce emissions.", answer: "True", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "What does CO₂ stand for?", answer: "Carbon dioxide", options: ["Carbon dioxide", "Cold oxygen", "Carbon water", "Clean ozone"] },
+            { topic: "🌍 Climate Change", question: "True or False: Climate and weather are exactly the same thing.", answer: "False", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which action helps fight climate change?", answer: "Planting trees", options: ["Planting trees", "Wasting electricity", "Burning plastic", "Cutting forests"] },
+            { topic: "🌍 Climate Change", question: "True or False: Climate change only affects one country.", answer: "False", options: ["True", "False"] },
+            { topic: "🌍 Climate Change", question: "Which sector produces greenhouse gases?", answer: "All of the above", options: ["Transportation", "Factories", "Electricity production", "All of the above"] },
+            
+            // Greenwashing (20)
+            { topic: "🌱 Greenwashing", question: "True or False: Greenwashing means making something seem more environmentally friendly than it really is.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which company action could be greenwashing?", answer: "Using fake 'eco-friendly' labels", options: ["Planting trees", "Using fake 'eco-friendly' labels", "Recycling properly", "Reducing pollution"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Some advertisements exaggerate environmental benefits.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which phrase might be misleading without proof?", answer: "'100% green'", options: ["'100% green'", "'Contains recycled materials'", "'Reusable bottle'", "'Energy efficient'"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Greenwashing can confuse customers.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which is a sign of possible greenwashing?", answer: "Vague environmental claims", options: ["Scientific evidence", "Clear data", "Vague environmental claims", "Certified labels"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Companies should provide proof for environmental claims.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which label is usually more trustworthy?", answer: "Certified eco label", options: ["Certified eco label", "Random green sticker", "No information", "Fake logo"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Greenwashing can make real environmental problems harder to solve.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "What is the purpose of greenwashing?", answer: "To mislead consumers into thinking a company is environmentally friendly", options: ["To mislead consumers into thinking a company is environmentally friendly", "To clean rivers", "To reduce pollution", "To recycle more"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Not all 'natural' products are environmentally friendly.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which example could be greenwashing?", answer: "A company hides pollution data but advertises green packaging", options: ["A company hides pollution data but advertises green packaging", "A company uses solar energy", "A company reduces waste", "A company plants forests"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Greenwashing is always easy to spot.", answer: "False", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which should consumers check before trusting eco claims?", answer: "Evidence and certifications", options: ["Evidence and certifications", "Product color only", "Advertisement music", "Package size"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Companies can use green colors to appear eco-friendly.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which is the best way to avoid greenwashing?", answer: "Research the company", options: ["Research the company", "Believe every ad immediately", "Ignore labels completely", "Buy the most expensive item"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Some companies spend more money on 'green' advertising than real environmental action.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "What does 'eco-friendly' mean?", answer: "Environmentally safe or less harmful", options: ["Environmentally safe or less harmful", "Made of metal only", "Very expensive", "Fast"] },
+            { topic: "🌱 Greenwashing", question: "True or False: Independent certifications can help verify environmental claims.", answer: "True", options: ["True", "False"] },
+            { topic: "🌱 Greenwashing", question: "Which of these is most trustworthy?", answer: "Verified environmental report", options: ["Verified environmental report", "'Trust us' slogan", "Bright green packaging", "Cartoon trees on a label"] }
+        ];
+        
+        // Game State
+        let currentLevel = 'normal';
+        let player = { x: 150, y: 280, size: 40, velY: 0, onGround: false, rotation: 0, jumps: 0, reversedGravity: false };
+        let obstacles = [];
+        let platforms = [];
+        let score = 0;
+        let difficulty = 50;
+        let gameRunning = false;
+        let showingQuestion = false;
+        let currentQuestion = null;
+        let lastQuestionSection = -1;
+        let worldOffset = 0;
+        let lastObstacleX = 0;
+        let particles = [];
+        let trailParticles = [];
+        let deathEffect = [];
+        let isDead = false;
+        let deadTimer = 0;
+        let hasWon = false;
+        let groundY = 320;
+        let targetGroundY = 320;
+        let terrainSegments = [];
+        
+        // Animation effects
+        let backgroundStars = [];
+        let confetti = [];
+        let screenShake = 0;
+        let pulseEffect = 0;
+        let glowEffect = 0;
+        
+        // Initialize background stars
+        function initStars() {
+            backgroundStars = [];
+            for (let i = 0; i < 50; i++) {
+                backgroundStars.push({
+                    x: Math.random() * 900,
+                    y: Math.random() * 500,
+                    size: Math.random() * 3 + 1,
+                    speed: Math.random() * 0.5 + 0.2,
+                    brightness: Math.random()
+                });
+            }
+        }
+        
+        // Physics
+        const gravity = 0.35;
+        const jumpForce = -11;
+        const baseScrollSpeed = 6;
+        let currentScrollSpeed = baseScrollSpeed * 0.7;
+        
+        // Controls
+        const keys = {};
+        
+        document.addEventListener('keydown', (e) => {
+            if (!keys[e.key]) {
+                keys[e.key] = true;
+                if (['ArrowUp', 'w', ' ', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key) || e.key === ' ') {
+                    e.preventDefault();
+                }
+            }
+        });
+        document.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+        
+        function getDifficultySettings() {
+            return {
+                obstacleGap: Math.max(400, 700 - difficulty * 3),
+                obstacleHeight: Math.min(80, 40 + difficulty * 0.3),
+                spikeChance: 0.2,
+                platformChance: Math.max(0.2, 0.3 - difficulty * 0.001),
+                voidChance: Math.min(0.25, 0.05 + difficulty * 0.002),
+                maxElevationChange: Math.min(60, 25 + difficulty * 0.3)
+            };
+        }
+        
+        function generateObstacles() {
+            if (obstacles.length === 0) {
+                terrainSegments.push({
+                    x: 0,
+                    width: 300,
+                    y: 320,
+                    type: 'flat'
+                });
+                generateTerrain(300, 8300);
+                let x = 600;
+                for (let i = 0; i < 20; i++) {
+                    addObstacleAt(x);
+                    const settings = getDifficultySettings();
+                    x += settings.obstacleGap + Math.random() * 100;
+                }
+                lastObstacleX = x;
+            }
+        }
+        
+        function generateTerrain(startX, endX) {
+            let lastX = startX;
+            let lastY = 320;
+            let farthestSegment = null;
+            for (let i = terrainSegments.length - 1; i >= 0; i--) {
+                if (terrainSegments[i].type === 'flat') {
+                    farthestSegment = terrainSegments[i];
+                    break;
+                }
+            }
+            if (farthestSegment) {
+                lastX = farthestSegment.x + farthestSegment.width;
+                lastY = farthestSegment.y;
+            }
+            if (lastX < startX) {
+                lastX = startX;
+                lastY = 320;
+            }
+            const settings = getDifficultySettings();
+            const maxElevation = settings.maxElevationChange;
+            let iterations = 0;
+            const maxIterations = 2000;
+            while (lastX < endX && iterations < maxIterations) {
+                iterations++;
+                const terrainType = Math.random();
+                if (terrainType < 0.45) {
+                    const width = Math.max(80, 100 + Math.random() * 80);
+                    terrainSegments.push({x:lastX, width:width, y:lastY, type:'flat'});
+                    lastX += width;
+                } else if (terrainType < 0.65) {
+                    const stepHeight = Math.min(maxElevation * 0.7,15+Math.random()*maxElevation*0.5);
+                    const stepWidth = Math.max(80,100+Math.random()*40);
+                    const newY = Math.max(180, lastY - stepHeight);
+                    terrainSegments.push({x:lastX, width:stepWidth, y:newY, type:'flat', stepUp:true});
+                    terrainSegments.push({x:lastX-5, width:stepWidth+10, y:newY+15, height:lastY-newY-15, type:'wall'});
+                    lastX += stepWidth;
+                    lastY = newY;
+                } else if (terrainType < 0.85) {
+                    const stepHeight = Math.min(maxElevation*0.6,12+Math.random()*maxElevation*0.4);
+                    const stepWidth = Math.max(80,80+Math.random()*40);
+                    const newY = Math.min(370, lastY+stepHeight);
+                    terrainSegments.push({x:lastX, width:stepWidth, y:lastY, type:'flat'});
+                    const lowerWidth = Math.max(100,120+Math.random()*50);
+                    terrainSegments.push({x:lastX+stepWidth, width:lowerWidth, y:newY, type:'flat'});
+                    lastX += stepWidth + lowerWidth;
+                    lastY = newY;
+                } else if (terrainType < 0.93) {
+                    const gapWidth = Math.min(400,150+Math.random()*250);
+                    const platformWidth = Math.max(120,120+Math.random()*60);
+                    terrainSegments.push({x:lastX+gapWidth, width:platformWidth, y:lastY, type:'flat', gapBefore:true});
+                    lastX += gapWidth + platformWidth;
+                } else {
+                    const floatHeight = Math.min(maxElevation*0.8,20+Math.random()*25);
+                    const platformWidth = Math.max(70,70+Math.random()*30);
+                    const gapBetween = 30+Math.random()*20;
+                    const platforms = 2+Math.floor(Math.random()*2);
+                    const newY = Math.max(180, lastY-floatHeight);
+                    for(let p=0;p<platforms;p++){
+                        terrainSegments.push({x:lastX, width:platformWidth, y:newY, type:'flat', floating:true});
+                        lastX += platformWidth+gapBetween;
+                    }
+                    const groundWidth = Math.max(100,120+Math.random()*50);
+                    terrainSegments.push({x:lastX-gapBetween, width:groundWidth, y:lastY, type:'flat'});
+                    lastX = lastX - gapBetween + groundWidth;
+                }
+                lastY = Math.max(180, Math.min(370, lastY));
+            }
+        }
+        
+        function getGroundYAt(worldX) {
+            for (let i = 0; i < terrainSegments.length; i++) {
+                const seg = terrainSegments[i];
+                if (seg.type !== 'wall' && worldX >= seg.x && worldX < seg.x + seg.width) {
+                    return seg.y;
+                }
+            }
+            return null;
+        }
+        
+        function checkWallCollision(playerWorldX, playerY, playerSize) {
+            for (let i = 0; i < terrainSegments.length; i++) {
+                const seg = terrainSegments[i];
+                if (seg.type === 'wall') {
+                    if (playerWorldX + playerSize > seg.x && playerWorldX < seg.x + seg.width && playerY < seg.y + seg.height && playerY + playerSize > seg.y) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+        function checkSideCollision(playerWorldX, playerY, playerSize) {
+            for (let i = 0; i < terrainSegments.length; i++) {
+                const seg = terrainSegments[i];
+                if (seg.type === 'wall') {
+                    if (playerWorldX + playerSize > seg.x && playerWorldX < seg.x + seg.width && playerY + playerSize > seg.y && playerY < seg.y + seg.height) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+        function addObstacleAt(x) {
+            const settings = getDifficultySettings();
+            const type = Math.random();
+            const groundAtX = getGroundYAt(x);
+            if (type < settings.spikeChance) {
+                obstacles.push({x:x, y:groundAtX-50, width:30, height:50, type:'spike', groundY:groundAtX});
+            } else if (type < settings.spikeChance + settings.platformChance) {
+                const platformType = Math.random();
+                if (platformType < 0.2) {
+                    obstacles.push({x:x, y:groundAtX-100, width:100+Math.random()*60, height:20, type:'gravity_up', effect:'heavy_gravity'});
+                } else if (platformType < 0.4) {
+                    obstacles.push({x:x, y:groundAtX-100, width:100+Math.random()*60, height:20, type:'gravity_down', effect:'reverse_gravity'});
+                } else if (platformType < 0.6) {
+                    obstacles.push({x:x, y:groundAtX-100, width:100+Math.random()*60, height:20, type:'platform'});
+                } else if (platformType < 0.8) {
+                    obstacles.push({x:x, y:groundAtX-100, width:80, height:20, type:'platform_move', startY:groundAtX-100, moveRange:60, moveSpeed:0.03, moveOffset:Math.random()*Math.PI*2});
+                } else {
+                    obstacles.push({x:x, y:groundAtX-40, width:120+Math.random()*60, height:20, type:'platform_low'});
+                }
+            }
+        }
+        
+        function generateMoreObstacles() {
+            const settings = getDifficultySettings();
+            let x = lastObstacleX;
+            let farthestTerrain = 0;
+            for (let i = terrainSegments.length - 1; i >= 0; i--) {
+                if (terrainSegments[i].type === 'flat') {
+                    farthestTerrain = terrainSegments[i].x + terrainSegments[i].width;
+                    break;
+                }
+            }
+            generateTerrain(farthestTerrain, farthestTerrain + 5000);
+            const numObstacles = Math.min(4,2+Math.floor(difficulty/30));
+            for(let i=0;i<numObstacles;i++){
+                addObstacleAt(x);
+                x += settings.obstacleGap + Math.random()*100;
+            }
+            lastObstacleX = x;
+        }
+        
+        function drawGlow(x, y, w, h, color, blur) {
+            ctx.shadowColor = color;
+            ctx.shadowBlur = blur;
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, w, h);
+            ctx.shadowBlur = 0;
+        }
+        
+        function drawPlayer() {
+            if (isDead) return;
+            ctx.save();
+            ctx.translate(player.x + player.size / 2, player.y + player.size / 2);
+            if (!player.onGround) player.rotation += player.velY * 0.05;
+            else player.rotation = Math.round(player.rotation/(Math.PI/2))*(Math.PI/2);
+            ctx.rotate(player.rotation);
+            ctx.shadowColor = '#00ff88';
+            ctx.shadowBlur = 5;
+            const gradient = ctx.createLinearGradient(-player.size/2,-player.size/2,player.size/2,player.size/2);
+            gradient.addColorStop(0,'#00ff88');gradient.addColorStop(1,'#00cc6a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-player.size/2,-player.size/2,player.size,player.size);
+            ctx.fillStyle = 'rgba(255,255,255,0.2)';
+            ctx.fillRect(-player.size/4,-player.size/4,player.size/2,player.size/2);
+            ctx.strokeStyle = '#00ff88'; ctx.lineWidth=2; ctx.shadowBlur=5;
+            ctx.strokeRect(-player.size/2,-player.size/2,player.size,player.size);
+            ctx.fillStyle='rgba(255,255,255,0.2)';
+            ctx.fillRect(-player.size/2+4,-player.size/2+4,player.size-8,4);
+            ctx.fillStyle='#0a0a1a'; ctx.fillRect(2,-4,12,12);
+            ctx.fillStyle='white'; ctx.fillRect(6,-2,6,6);
+            ctx.restore();
+        }
+        
+        function updateTrail() {
+            if (!isDead && Math.random()>0.3) {
+                for(let i=0;i<2;i++){
+                    trailParticles.push({
+                        x:player.x-10-Math.random()*5,
+                        y:player.y+player.size/2-3+(Math.random()-0.5)*6,
+                        size:6+Math.random()*6, life:25, color:Math.random()>0.7?'#00ff88':'#00ffaa'
+                    })
+                }
+            }
+            trailParticles = trailParticles.filter(p=>{
+                p.life--; p.x -= currentScrollSpeed; p.size *=0.96; return p.life>0;
+            })
+        }
+        function drawTrail() {
+            trailParticles.forEach(p=>{
+                ctx.globalAlpha = p.life/25;
+                ctx.fillStyle=p.color; ctx.shadowColor=p.color; ctx.shadowBlur=2;
+                ctx.fillRect(p.x,p.y,p.size,p.size);
+            })
+            ctx.globalAlpha=1; ctx.shadowBlur=0;
+        }
+        
+        function drawObstacles() {
+            obstacles.forEach(o=>{
+                const screenX = o.x - worldOffset;
+                if(screenX<-100||screenX>canvas.width+100) return;
+                ctx.save();
+                if(o.type==='gravity_up'){
+                    ctx.shadowColor='#ffcc00'; ctx.shadowBlur=3; ctx.fillStyle='#ffcc00';
+                    ctx.fillRect(screenX,o.y,o.width,o.height);
+                    ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.fillRect(screenX,o.y,o.width,4);
+                }else if(o.type==='gravity_down'){
+                    ctx.shadowColor='#3742fa'; ctx.shadowBlur=3; ctx.fillStyle='#3742fa';
+                    ctx.fillRect(screenX,o.y,o.width,o.height);
+                    ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.fillRect(screenX,o.y,o.width,4);
+                }else if(o.type==='platform'){
+                    ctx.shadowColor='#00ccff'; ctx.shadowBlur=3; ctx.fillStyle='rgba(0,204,255,0.8)';
+                    ctx.fillRect(screenX,o.y,o.width,o.height);
+                    ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.fillRect(screenX,o.y,o.width,4);
+                }else if(o.type==='platform_move'){
+                    ctx.shadowColor='#ff6b9d'; ctx.shadowBlur=3; ctx.fillStyle='#ff6b9d';
+                    ctx.fillRect(screenX,o.y,o.width,o.height);
+                }else if(o.type==='platform_low'){
+                    ctx.shadowColor='#66ff66'; ctx.shadowBlur=3; ctx.fillStyle='rgba(102,255,102,0.8)';
+                    ctx.fillRect(screenX,o.y,o.width,o.height);
+                }else{
+                    ctx.shadowColor='#ff4757'; ctx.shadowBlur=3; ctx.fillStyle='#ff4757';
+                    ctx.fillRect(screenX,o.y,o.width,o.height);
+                    ctx.fillStyle='rgba(255,255,255,0.2)'; ctx.fillRect(screenX,o.y,o.width,4);
+                }
+                ctx.restore();
+            })
+        }
+        
+        let sparkles = [];
+        function createSparkle(x,y){
+            sparkles.push({x,y,size:Math.random()*4+2,life:20,maxLife:20})
+        }
+        function updateSparkles(){
+            sparkles.forEach((s,i)=>{
+                s.life--; s.y-=1; if(s.life<=0) sparkles.splice(i,1);
+            })
+        }
+        function drawSparkles(){
+            sparkles.forEach(s=>{
+                const alpha = s.life/s.maxLife;
+                ctx.save(); ctx.shadowColor='#ffcc00'; ctx.shadowBlur=10;
+                ctx.fillStyle=`rgba(255,255,255,${alpha})`; ctx.beginPath();
+                for(let i=0;i<5;i++){
+                    const angle = (i*4*Math.PI)/5 - Math.PI/2;
+                    const px = s.x + Math.cos(angle)*s.size;
+                    const py = s.y + Math.sin(angle)*s.size;
+                    i===0 ? ctx.moveTo(px,py) : ctx.lineTo(px,py);
+                }
+                ctx.closePath(); ctx.fill(); ctx.restore();
+            })
+        }
+        
+        function drawGround() {
+            const voidGradient = ctx.createLinearGradient(0,450,0,500);
+            voidGradient.addColorStop(0,'transparent');voidGradient.addColorStop(0.5,'rgba(255,0,0,0.2)');voidGradient.addColorStop(1,'rgba(255,0,0,0.4)');
+            ctx.fillStyle=voidGradient; ctx.fillRect(0,450,canvas.width,50);
+            terrainSegments.forEach(seg=>{
+                const screenX = seg.x - worldOffset;
+                if(screenX>-100&&screenX<canvas.width+100){
+                    if(seg.type==='flat'){
+                        ctx.fillStyle='rgba(0,255,136,0.8)'; ctx.shadowColor='#00ff88'; ctx.shadowBlur=3;
+                        ctx.fillRect(screenX,seg.y-8,seg.width,8);
+                        ctx.fillStyle='rgba(0,255,136,0.7)'; ctx.shadowBlur=2;
+                        ctx.fillRect(screenX,seg.y,6,canvas.height-seg.y);
+                        ctx.fillStyle='rgba(0,255,136,0.5)';
+                        ctx.fillRect(screenX+seg.width-6,seg.y,6,canvas.height-seg.y);
+                        if(seg.stepUp){
+                            ctx.fillStyle='rgba(255,71,87,0.7)'; ctx.shadowColor='#ff4757'; ctx.shadowBlur=3;
+                            ctx.fillRect(screenX,seg.y-15,seg.width,7);
+                        }else if(seg.voidBefore){
+                            ctx.fillStyle='rgba(165,94,234,0.7)'; ctx.shadowColor='#a55eea'; ctx.shadowBlur=3;
+                            ctx.fillRect(screenX,seg.y-8,seg.width,8);
+                        }else if(seg.gapBefore){
+                            ctx.fillStyle='rgba(255,165,2,0.8)'; ctx.shadowColor='#ffa502'; ctx.shadowBlur=3;
+                            ctx.fillRect(screenX,seg.y-8,seg.width,8);
+                        }else if(seg.floating){
+                            ctx.fillStyle='rgba(55,66,250,0.7)'; ctx.shadowColor='#3742fa'; ctx.shadowBlur=3;
+                            ctx.fillRect(screenX,seg.y-8,seg.width,8);
+                        }
+                    }
+                    if(seg.type==='wall'){
+                        ctx.fillStyle='rgba(255,71,87,0.8)'; ctx.shadowColor='#ff4757'; ctx.shadowBlur=3;
+                        ctx.fillRect(screenX,seg.y,seg.width,seg.height);
+                    }
+                }
+            })
+            ctx.shadowBlur=0;
+        }
+        
+        function drawDeathEffect() {
+            deathEffect.forEach(p=>{
+                ctx.globalAlpha = p.life/60; ctx.fillStyle=p.color; ctx.shadowColor=p.color; ctx.shadowBlur=2;
+                ctx.fillRect(p.x,p.y,p.size,p.size);
+            })
+            ctx.globalAlpha=1; ctx.shadowBlur=0;
+        }
+        
+        function drawBackground() {
+            const gradient = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+            gradient.addColorStop(0,'#1a0a2e');gradient.addColorStop(0.5,'#0a0a1a');gradient.addColorStop(1,'#0f1a2e');
+            ctx.fillStyle=gradient; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.strokeStyle='rgba(0,255,136,0.05)'; ctx.lineWidth=1;
+            for(let i=0;i<20;i++){
+                const x = (i*100)-(worldOffset*0.3%100);
+                ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,canvas.height); ctx.stroke();
+            }
+            const nebulaGradient = ctx.createRadialGradient(450,250,0,450,250,250);
+            nebulaGradient.addColorStop(0,'rgba(138,43,226,0.05)');nebulaGradient.addColorStop(0.5,'rgba(75,0,130,0.03)');nebulaGradient.addColorStop(1,'transparent');
+            ctx.fillStyle=nebulaGradient; ctx.fillRect(0,0,canvas.width,canvas.height);
+        }
+        
+        function updateDeathEffect() {
+            deathEffect = deathEffect.filter(p=>{
+                p.life--; p.x+=p.vx; p.y+=p.vy; p.vy+=0.3; p.size*=0.97; return p.life>0;
+            })
+        }
+        function createDeathEffect() {
+            for(let i=0;i<30;i++){
+                deathEffect.push({
+                    x:player.x+player.size/2,y:player.y+player.size/2,
+                    size:8+Math.random()*15,
+                    vx:(Math.random()-0.5)*15,vy:(Math.random()-0.5)*15,
+                    life:60, color:Math.random()>0.5?'#ff4757':'#00ff88'
+                })
+            }
+        }
+        function triggerDeath() {
+            if (showingQuestion) {
+                document.getElementById('questionScreen').style.display = 'none';
+                showingQuestion = false;
+            }
+            if (isDead) return;
+            isDead = true; deadTimer=0; createDeathEffect();
+        }
+        
+        function drawStars() {
+            backgroundStars.forEach(star=>{
+                const alpha = 0.3;
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.shadowBlur = 2;
+                ctx.shadowColor = 'rgba(255, 255, 255, 0.3)';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+        }
+        
+        function updateStars() {
+            backgroundStars.forEach(star => {
+                star.x -= star.speed;
+                if (star.x < -10) {
+                    star.x = 910;
+                    star.y = Math.random() * 500;
+                }
+            });
+        }
+        
+        function drawConfetti() {
+            confetti.forEach((c, index) => {
+                c.y += c.speed;
+                c.x += c.wobble;
+                c.rotation += c.rotationSpeed;
+                c.wobble = Math.sin(Date.now() * 0.01 + index) * 0.5;
+                
+                if (c.y > 500) {
+                    confetti.splice(index, 1);
+                    return;
+                }
+                
+                ctx.save();
+                ctx.translate(c.x, c.y);
+                ctx.rotate(c.rotation);
+                ctx.fillStyle = c.color;
+                ctx.fillRect(-c.size/2, -c.size/2, c.size, c.size);
+                ctx.restore();
+            });
+        }
+        
+        function createConfetti(x, y, count = 100) {
+            const colors = ['#00ff88', '#ffcc00', '#ff6b6b', '#4ecdc4', '#a855f7', '#f472b6'];
+            for (let i = 0; i < count; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: -20 - Math.random() * 100,
+                    size: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 6 + 3,
+                    wobble: (Math.random() - 0.5) * 3,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.3
+                });
+            }
+        }
+        
+        function triggerScreenShake(intensity = 10) {
+            screenShake = intensity;
+        }
+        
+        function updatePlayer() {
+            if (isDead) {
+                deadTimer++;
+                if (deadTimer > 60) {
+                    gameOver();
+                }
+                return;
+            }
+            
+            let gravityModifier = 1;
+            
+            if ((keys['ArrowUp'] || keys['w'] || keys[' ']) && !keys['jumpHandled']) {
+                keys['jumpHandled'] = true;
+                if (player.onGround) {
+                    player.velY = player.reversedGravity ? -jumpForce * 0.7 : jumpForce;
+                    player.onGround = false;
+                    player.jumps = 1;
+                    triggerScreenShake(3);
+                } else if (player.jumps < 2) {
+                    player.velY = player.reversedGravity ? -jumpForce * 0.6 : jumpForce * 0.9;
+                    player.jumps = 2;
+                    triggerScreenShake(4);
+                }
+            }
+            if (!(keys['ArrowUp'] || keys['w'] || keys[' '])) {
+                keys['jumpHandled'] = false;
+            }
+            
+            if (player.reversedGravity) {
+                player.velY -= gravity;
+            } else {
+                player.velY += gravity * gravityModifier;
+            }
+            
+            player.y += player.velY;
+            
+            if (checkWallCollision(player.x + worldOffset, player.y, player.size)) {
+                triggerDeath();
+                return;
+            }
+            
+            if (checkSideCollision(player.x + worldOffset, player.y, player.size)) {
+                triggerDeath();
+                return;
+            }
+            
+            const currentGroundY = getGroundYAt(player.x + worldOffset);
+            player.onGround = false;
+            
+            if (player.reversedGravity) {
+                if (player.y <= 10) {
+                    player.y = 10;
+                    player.velY = 0;
+                    player.onGround = true;
+                    player.jumps = 0;
+                    triggerScreenShake(2);
+                }
+            } else {
+                if (currentGroundY !== null && player.y + player.size >= currentGroundY && player.velY >= 0) {
+                    player.y = currentGroundY - player.size;
+                    player.velY = 0;
+                    player.onGround = true;
+                    player.jumps = 0;
+                    triggerScreenShake(2);
+                }
+            }
+            
+            if (player.y > 520) {
+                triggerDeath();
+                return;
+            }
+            
+            obstacles.forEach(o => {
+                if (o.type === 'platform_move') {
+                    o.y = o.startY + Math.sin(Date.now() * o.moveSpeed + o.moveOffset) * o.moveRange;
+                }
+            });
+            
+            obstacles.forEach(o => {
+                if (o.type === 'spike' || o.type === 'block') return;
+                
+                const screenX = o.x - worldOffset;
+                
+                if (player.velY >= 0 &&
+                    player.x + player.size > screenX &&
+                    player.x < screenX + o.width &&
+                    player.y + player.size >= o.y &&
+                    player.y + player.size <= o.y + o.height + 10) {
+                    
+                    player.y = o.y - player.size;
+                    player.velY = 0;
+                    player.onGround = true;
+                    player.jumps = 0;
+                    
+                    if (o.type === 'gravity_up') {
+                        gravityModifier = 2;
+                        player.reversedGravity = false;
+                    } else if (o.type === 'gravity_down') {
+                        player.reversedGravity = true;
+                        player.velY = 3;
+                        player.onGround = false;
+                    }
+                }
+            });
+            
+            if (gravityModifier !== 1) {
+                player.velY += gravity * (gravityModifier - 1);
+            }
+            
+            obstacles.forEach(o => {
+                const screenX = o.x - worldOffset;
+                
+                if (player.x + player.size - 5 > screenX &&
+                    player.x + 5 < screenX + o.width &&
+                    player.y + player.size - 5 > o.y &&
+                    player.y + 5 < o.y + o.height) {
+                    triggerDeath();
+                }
+            });
+            
+            worldOffset += currentScrollSpeed;
+            
+            const speedIncrease = worldOffset / 3000;
+            const maxSpeed = baseScrollSpeed * (1 + difficulty * 0.01);
+            currentScrollSpeed = Math.min(maxSpeed, baseScrollSpeed * 0.7 + speedIncrease);
+            
+            document.getElementById('speedDisplay').textContent = 'Speed: ' + Math.round(currentScrollSpeed * 100 / baseScrollSpeed) + '%';
+            
+            obstacles = obstacles.filter(o => o.x - worldOffset > -200);
+            
+            let farthestTerrain = 0;
+            let lastY = 320;
+            
+            for (let i = terrainSegments.length - 1; i >= 0; i--) {
+                if (terrainSegments[i].type === 'flat') {
+                    farthestTerrain = terrainSegments[i].x + terrainSegments[i].width;
+                    lastY = terrainSegments[i].y;
+                    break;
+                }
+            }
+            
+            if (farthestTerrain - worldOffset < 3500) {
+                generateTerrain(farthestTerrain, farthestTerrain + 5000);
+            }
+            
+            const lookAheadX = worldOffset + 2000;
+            let hasTerrainAhead = false;
+            
+            for (let i = 0; i < terrainSegments.length; i++) {
+                const seg = terrainSegments[i];
+                if (seg.type === 'flat' && seg.x < lookAheadX && seg.x + seg.width > worldOffset) {
+                    hasTerrainAhead = true;
+                    break;
+                }
+            }
+            
+            if (!hasTerrainAhead && worldOffset > 300) {
+                const startX = Math.max(300, worldOffset - 200);
+                for (let i = 0; i < 30; i++) {
+                    terrainSegments.push({
+                        x: startX + (i * 200),
+                        width: 180,
+                        y: 320,
+                        type: 'flat'
+                    });
+                }
+                farthestTerrain = startX + (30 * 200);
+            }
+            
+            if (lastObstacleX - worldOffset < 1500) {
+                generateMoreObstacles();
+            }
+            
+            score = Math.floor(worldOffset / 10);
+            document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+            
+            const currentSection = Math.floor(worldOffset / 5000);
+            if (currentSection > lastQuestionSection && !showingQuestion && worldOffset > 500) {
+                lastQuestionSection = currentSection;
+                showQuestion();
+            }
+        }
+        
+        function draw() {
+            ctx.save();
+            
+            if (screenShake > 0) {
+                const shakeX = (Math.random() - 0.5) * screenShake;
+                const shakeY = (Math.random() - 0.5) * screenShake;
+                ctx.translate(shakeX, shakeY);
+            }
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drawBackground();
+            drawStars();
+            drawGround();
+            drawTrail();
+            drawObstacles();
+            drawPlayer();
+            drawDeathEffect();
+            
+            ctx.restore();
+            drawConfetti();
+        }
+        
+        function gameLoop() {
+            if (gameRunning) {
+                if (!showingQuestion) {
+                    updatePlayer();
+                    updateTrail();
+                }
+                updateDeathEffect();
+                updateStars();
+                
+                if (screenShake > 0) screenShake *= 0.9;
+                
+                if (isDead) {
+                    deadTimer++;
+                    if (deadTimer > 60) {
+                        gameOver();
+                    }
+                }
+            }
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function startGame(level = 'normal') {
+            currentLevel = level;
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('gameOverScreen').style.display = 'none';
+            
+            player = { x: 150, y: 280, size: 40, velY: 0, onGround: true, rotation: 0, jumps: 0, reversedGravity: false };
+            obstacles = [];
+            platforms = [];
+            terrainSegments = [];
+            score = 0;
+            initStars();
+            
+            const levelSettings = {
+                easy: { difficulty: 1, speed: 0.4, label: '40%' },
+                normal: { difficulty: 1, speed: 0.7, label: '70%' },
+                hard: { difficulty: 1, speed: 1.0, label: '100%' },
+                insane: { difficulty: 1, speed: 1.5, label: '150%' }
+            };
+            
+            const settings = levelSettings[level] || levelSettings.normal;
+            difficulty = settings.difficulty;
+            
+            gameRunning = true;
+            showingQuestion = false;
+            isDead = false;
+            worldOffset = 0;
+            lastObstacleX = 0;
+            particles = [];
+            trailParticles = [];
+            deathEffect = [];
+            lastQuestionSection = -1;
+            groundY = 320;
+            currentScrollSpeed = baseScrollSpeed * settings.speed;
+            
+            document.getElementById('difficultyFill').style.width = settings.difficulty + '%';
+            document.getElementById('speedDisplay').textContent = 'Speed: ' + settings.label;
+            
+            generateObstacles();
+        }
+        
+        function showQuestion() {
+            showingQuestion = true;
+            currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+            
+            document.getElementById('questionTopic').textContent = currentQuestion.topic;
+            document.getElementById('questionText').textContent = currentQuestion.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            document.getElementById('qBox').classList.remove('wrong-bg');
+            
+            const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(btn, opt);
+                optionsContainer.appendChild(btn);
+            });
+            
+            document.getElementById('resultMessage').style.display = 'none';
+            document.getElementById('continueBtn').style.display = 'none';
+            document.getElementById('questionScreen').style.display = 'flex';
+        }
+        
+        function checkAnswer(btn, selected) {
+            const isCorrect = selected === currentQuestion.answer;
+            
+            document.querySelectorAll('.option-btn').forEach(b => {
+                b.style.pointerEvents = 'none';
+                if (b.textContent === currentQuestion.answer) {
+                    b.classList.add('correct');
+                }
+            });
+            
+            if (!isCorrect) {
+                btn.classList.add('wrong');
+            }
+            
+            if (isCorrect) {
+                difficulty = Math.max(0, difficulty - 15);
+                currentScrollSpeed *= 0.7;
+                score += 50;
+                document.getElementById('resultMessage').textContent = '🎉 Correct! Next section is easier!';
+                document.getElementById('resultMessage').className = 'result-message easier';
+                createConfetti(Math.random() * canvas.width, -50, 150);
+                triggerScreenShake(5);
+            } else {
+                // 答错：速度变快、难度提升、界面变红、提示文字
+                difficulty = Math.min(100, difficulty + 15);
+                currentScrollSpeed *= 1.5;
+                document.getElementById('qBox').classList.add('wrong-bg');
+                document.getElementById('resultMessage').textContent = '❌ Wrong! Next Section is Harder!';
+                document.getElementById('resultMessage').className = 'result-message harder';
+                triggerScreenShake(8);
+            }
+            
+            document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+            document.getElementById('difficultyFill').style.width = difficulty + '%';
+            document.getElementById('resultMessage').style.display = 'block';
+            document.getElementById('continueBtn').style.display = 'inline-block';
+        }
+        
+        function continueAfterQuestion() {
+            showingQuestion = false;
+            document.getElementById('questionScreen').style.display = 'none';
+            isDead = false;
+            player.rotation = 0;
+        }
+        
+        function gameOver() {
+            gameRunning = false;
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('gameOverScreen').style.display = 'flex';
+        }
+        
+        function restartGame() {
+            startGame(currentLevel);
+        }
+        
+        gameLoop();
+    </script>
+</body>
+</html>
