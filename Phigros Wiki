@@ -1433,6 +1433,593 @@
       color: var(--accent);
       border-color: var(--accent);
     }
+
+    /* ==================== 三级导航菜单专属样式 ==================== */
+    .sub-nav-item {
+      position: relative;
+    }
+
+    .sub-nav-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      color: var(--text-dim);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+
+    .sub-nav-trigger:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .sub-dropdown {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      min-width: 120px;
+      padding: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-4px);
+      transition: opacity .15s, transform .15s, visibility .15s;
+    }
+
+    /* 鼠标悬停在二级菜单时，展开三级菜单 */
+    .sub-nav-item:hover .sub-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .sub-dropdown a {
+      display: block;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      color: var(--text-dim);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .sub-dropdown a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ==================== PMT 赛况及排名样式 ==================== */
+    .pmt-rank-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .pmt-rank-item {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 24px;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .pmt-rank-item:hover {
+      background: var(--bg-elev);
+      transform: translateX(4px);
+    }
+
+    .pmt-rank-num {
+      font-size: 20px;
+      font-weight: 900;
+      font-family: monospace;
+      width: 60px;
+      flex-shrink: 0;
+    }
+
+    .rank-top3 {
+      color: #eab308;
+      text-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
+    }
+
+    .rank-top8 {
+      color: #ef4444;
+    }
+
+    .rank-top16 {
+      color: #3b82f6;
+    }
+
+    .rank-normal {
+      color: var(--text-dim);
+    }
+
+    .pmt-rank-info {
+      flex-grow: 1;
+    }
+
+    .pmt-rank-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .pmt-rank-id {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .pmt-rank-score {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--accent);
+      font-family: monospace;
+    }
+
+    /* 赛况卡片 */
+    .pmt-bracket-container {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .pmt-round-title {
+      font-size: 22px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-top: 24px;
+    }
+
+    .pmt-match-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .pmt-match-header {
+      background: var(--bg-elev);
+      padding: 12px 20px;
+      font-weight: bold;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pmt-match-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pmt-match-players {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 20px;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pmt-player-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-elev);
+      padding: 12px 16px;
+      border-radius: 8px;
+    }
+
+    .pmt-p-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pmt-p-name {
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .pmt-p-id {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .pmt-p-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .pmt-p-score {
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .pmt-p-status {
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .status-win {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+
+    .status-lose {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    /* 谱面表格 */
+    .pmt-match-charts {
+      padding: 16px 20px;
+      overflow-x: auto;
+    }
+
+    .pmt-chart-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .pmt-chart-table th,
+    .pmt-chart-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+    }
+
+    .pmt-chart-table th {
+      background: var(--bg-elev);
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .pmt-chart-table td:first-child {
+      text-align: left;
+      color: var(--text);
+      font-weight: bold;
+    }
+
+    .pmt-chart-table tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* ==================== 侧边悬浮导航 ==================== */
+    #side-nav-trigger {
+      position: fixed;
+      top: 80px;
+      /* 避开顶部导航栏 */
+      left: 10px;
+      width: 30px;
+      height: 50px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: none;
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      color: var(--text-dim);
+      font-size: 12px;
+      transition: transform 0.3s, background 0.3s;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #side-nav-trigger:hover {
+      background: var(--bg-elev);
+      color: var(--accent);
+    }
+
+    /* 展开时箭头旋转 */
+    #side-nav-trigger.open {
+      transform: rotate(180deg);
+      left: 200px;
+      /* 跟随面板宽度移动 */
+    }
+
+    #side-nav-panel {
+      position: fixed;
+      top: 80px;
+      left: -220px;
+      /* 默认隐藏 */
+      width: 200px;
+      max-height: calc(100vh - 100px);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 0 12px 12px 0;
+      z-index: 99;
+      transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    /* 展开状态 */
+    #side-nav-panel.open {
+      left: 0;
+    }
+
+    #side-nav-content {
+      padding: 16px;
+    }
+
+    #side-nav-content h4 {
+      margin: 0 0 12px 0;
+      color: var(--accent);
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    #side-nav-content a {
+      display: block;
+      padding: 10px 12px;
+      color: var(--text-dim);
+      font-size: 13px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #side-nav-content a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    /* 侧边栏分组标题样式优化 */
+    #side-nav-content h4 {
+      margin: 16px 0 8px 0;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 6px;
+    }
+
+    #side-nav-content h4:first-child {
+      margin-top: 0;
+    }
+
+    /* 侧边栏滚动条美化 */
+    #side-nav-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #side-nav-panel::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+        /* ==================== PMT 预选成绩单样式 (还原截图) ==================== */
+    .pmt-preview-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pmt-preview-card {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .pmt-preview-card:hover {
+      border-color: var(--accent);
+    }
+
+    /* 左侧名次背景 */
+    .preview-left {
+      width: 120px;
+      flex-shrink: 0;
+      background: #1a2235; /* 深蓝黑底色 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .preview-rank {
+      font-size: 24px;
+      font-weight: 900;
+      font-family: monospace;
+      color: #4ea1ff;
+    }
+
+    .rank-top3 { color: #eab308; }
+    .rank-top8 { color: #ef4444; }
+    .rank-top16 { color: #3b82f6; }
+
+    /* 右侧内容 */
+    .preview-right {
+      flex-grow: 1;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preview-name {
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .preview-id {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    .preview-score {
+      font-size: 28px;
+      font-weight: 900;
+      font-family: monospace;
+      color: #fff;
+    }
+
+    .preview-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .preview-song-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 10px;
+    }
+    .preview-song-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .ps-title {
+      font-size: 16px;
+      color: #ddd;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ps-diff {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .ps-rks {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-family: monospace;
+    }
+
+    .ps-stats {
+      display: flex;
+      gap: 20px;
+      font-family: monospace;
+      font-size: 16px;
+    }
+
+    .ps-score {
+      color: #aaa;
+      font-weight: bold;
+    }
+
+    .ps-rks-val {
+      color: #fff;
+      font-weight: 900;
+    }
+        /* ==================== 年度爱曲样式 ==================== */
+    .yearly-fav-section {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .yearly-fav-title {
+      font-size: 22px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-left: 4px;
+    }
+    .yearly-fav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .yearly-fav-card {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .yearly-fav-card:hover {
+      border-color: var(--accent);
+    }
+    .yf-left {
+      width: 80px;
+      flex-shrink: 0;
+      background: #1a2235;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--border);
+    }
+    .yf-rank {
+      font-size: 22px;
+      font-weight: 900;
+      font-family: monospace;
+      color: #4ea1ff;
+    }
+    .rank-top3 { color: #eab308; }
+    .rank-top8 { color: #ef4444; }
+    .rank-top16 { color: #3b82f6; }
+    .yf-right {
+      flex-grow: 1;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .yf-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .yf-artist {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .yf-stats {
+      display: flex;
+      gap: 16px;
+      margin-top: 6px;
+      font-size: 13px;
+      font-family: monospace;
+      flex-wrap: wrap;
+    }
+    .yf-total { color: var(--accent); font-weight: bold; }
+    .yf-normal { color: #aaa; }
+    .yf-truelove { color: #ef4444; }
   </style>
 </head>
 
@@ -1459,16 +2046,25 @@
           </div>
         </div>
         <div class="nav-item">
-          <span class="nav-trigger">变更 <span class="caret">▼</span></span>
+          <span class="nav-trigger">历史 <span class="caret">▼</span></span>
           <div class="dropdown">
+            <a onclick="showYearlyFav()">年度爱曲</a>
             <a onclick="showRatingChange()">定数变更</a>
           </div>
         </div>
         <div class="nav-item">
           <span class="nav-trigger">赛事 <span class="caret">▼</span></span>
           <div class="dropdown">
-            <a onclick="showComingSoon('PMT 图池')">PMT 图池</a>
-            <a onclick="showComingSoon('PMT 赛况')">PMT 赛况</a>
+            <!-- 二级菜单项 -->
+            <div class="sub-nav-item">
+              <a class="sub-nav-trigger">PMT 赛况 <span class="caret" style="float: right; margin-top: 4px;">▶</span></a>
+              <!-- 三级菜单列表 -->
+              <div class="sub-dropdown">
+                <a onclick="showPMT2026Preview()">预选</a>
+                <a onclick="showPMT2026Rank()">排名</a>
+                <a onclick="showPMT2026Bracket()">赛况</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="nav-item">
@@ -1480,6 +2076,14 @@
         </div>
       </nav>
   </header>
+  <!-- 左侧悬浮导航触发箭头 -->
+  <div id="side-nav-trigger" onclick="toggleSideNav()">▶</div>
+  <!-- 侧边栏导航 -->
+  <div id="side-nav-panel">
+    <div id="side-nav-content"></div>
+  </div>
+
+  <main class="container" id="app"></main>
   <main class="container" id="app"></main>
   <footer class="footer">
     <div class="container"><span>© Pigeon Games · Phigros Wiki</span></div>
@@ -5199,9 +5803,567 @@
         </section>
       `;
     }
+        // ==================== 年度爱曲 ====================
+    function showYearlyFav() {
+      const yearlyFavSongs = [
+        { title: "雪降り ~雪が降っている~", artist: "AiSS w/ 夜輪 ft. 結月ゆかり", total: 17066, normal: 8332, trueLove: 4367 },
+        { title: "Retribution ~ Cycle of Redemption ~", artist: "Ardolf vs. Daily天利", total: 15571, normal: 8199, trueLove: 3686 },
+        { title: "BANGING STRIKE", artist: "Dew Pleiades", total: 13543, normal: 7261, trueLove: 3141 },
+        { title: "AbsoluTe disoRdeR", artist: "Acute Disarray", total: 12788, normal: 7058, trueLove: 2865 },
+        { title: "QZKago Requiem", artist: "t+pazolite", total: 12534, normal: 6802, trueLove: 2866 },
+        { title: "Hydra", artist: "James Landino X Akira Complex", total: 11232, normal: 6060, trueLove: 2586 },
+        { title: "Stardust:RAY", artist: "kanone vs. BlackY", total: 10110, normal: 5702, trueLove: 2204 },
+        { title: "Frozen Heart", artist: "A-39 / 沙包P", total: 9331, normal: 5167, trueLove: 2082 },
+        { title: "sølips", artist: "rintaro soma", total: 8502, normal: 4488, trueLove: 2007 },
+        { title: "Luminous Entities Lost Heart", artist: "NormalM feat. Usagi Denki", total: 8380, normal: 4028, trueLove: 2176 },
+        { title: "蝎虎天体 -Lacertid-", artist: "Cream vs. Daily天利", total: 7013, normal: 4011, trueLove: 1501 },
+        { title: "Alice in a xxxxxxxx", artist: "Nagiha", total: 6992, normal: 4070, trueLove: 1461 },
+        { title: "Avataar ~Reincarnation of Kalpa~", artist: "Scarlette a.k.a CrYmson", total: 6731, normal: 3635, trueLove: 1548 },
+        { title: "アンビバレンス", artist: "すりぃ×相沢", total: 5850, normal: 3182, trueLove: 1334 },
+        { title: "Archidoxen", artist: "Se_IRA", total: 4411, normal: 2433, trueLove: 989 },
+        { title: "宇宙残骸少女 (Cosmic Dusty Girl)", artist: "辻原一郎", total: 4380, normal: 2490, trueLove: 945 },
+        { title: "The Whole Rest", artist: "KIVΛ", total: 4153, normal: 2139, trueLove: 1007 },
+        { title: "Diamond Dust", artist: "Masahiro “Godspeed” Aoki", total: 4082, normal: 2508, trueLove: 787 },
+        { title: "Radiance", artist: "Nhato", total: 4008, normal: 2348, trueLove: 830 },
+        { title: "NO x", artist: "Juggernaut.", total: 3766, normal: 2264, trueLove: 751 },
+        { title: "Cristalisia", artist: "onoken", total: 3739, normal: 1899, trueLove: 920 },
+        { title: "KIZUNA Resolution", artist: "TAG", total: 3484, normal: 2252, trueLove: 616 },
+        { title: "贝多芬祝福 (Beethoven Blessing)", artist: "Nauts", total: 3353, normal: 2063, trueLove: 645 },
+        { title: "百鬼֎夜行", artist: "Salad Savior", total: 2914, normal: 1960, trueLove: 477 },
+        { title: "DevIAtiOn (short ver.)", artist: "polysha", total: 2570, normal: 1584, trueLove: 493 },
+        { title: "Flutter Echo", artist: "Cansol", total: 2503, normal: 1581, trueLove: 461 },
+        { title: "Komplexe", artist: "雄之助 feat. Sennzai", total: 2302, normal: 1496, trueLove: 403 },
+        { title: "Locomotive", artist: "♠K", total: 2148, normal: 1216, trueLove: 466 },
+        { title: "Aphrodite's Child (short ver.)", artist: "RUQOA", total: 2092, normal: 1228, trueLove: 432 },
+        { title: "Resolver", artist: "Gomadare", total: 2011, normal: 1229, trueLove: 391 },
+        { title: "ニライカナイ (NiraicA_nai Mix)", artist: "roop from STR", total: 1977, normal: 1257, trueLove: 360 },
+        { title: "So laggy! (feat. Uzumaki)", artist: "ShrimpCats. (はぁち×後藤涼輔)", total: 1803, normal: 1129, trueLove: 337 },
+        { title: "Re：birth", artist: "ああああ", total: 1764, normal: 1164, trueLove: 300 },
+        { title: "インマイマインド", artist: "レシオP", total: 1432, normal: 872, trueLove: 280 },
+        { title: "最高傑作", artist: "PYKAMIA", total: 1430, normal: 906, trueLove: 262 },
+        { title: "Swing Skip Drop", artist: "ミハイル", total: 1196, normal: 784, trueLove: 206 },
+        { title: "Helios", artist: "NOA(Cortrix) & BotaNya", total: 1145, normal: 715, trueLove: 215 },
+        { title: "000 -Ain Soph Aur-", artist: "Yumeji", total: 854, normal: 524, trueLove: 165 },
+        { title: "Shelter", artist: "MeatyRabbit & NceS", total: 813, normal: 555, trueLove: 129 },
+        { title: "Xep+ion", artist: "Acotto", total: 456, normal: 314, trueLove: 71 }
+      ];
 
+      let html = `
+        <a class="back-link" onclick="goHome()">← 返回主页</a>
+        <h1 class="page-title">年度爱曲</h1>
+        <div class="yearly-fav-list">
+      `;
+
+      yearlyFavSongs.forEach((s, i) => {
+        let rankClass = "rank-normal";
+        if (i === 0) rankClass = "rank-top3";
+        else if (i === 1) rankClass = "rank-top8";
+        else if (i === 2) rankClass = "rank-top16";
+
+        html += `
+          <div class="yearly-fav-card anim-item" style="--i: ${i}">
+            <div class="yf-left">
+              <span class="yf-rank ${rankClass}">#${i + 1}</span>
+            </div>
+            <div class="yf-right">
+              <div class="yf-title">${s.title}</div>
+              <div class="yf-artist">${s.artist}</div>
+              <div class="yf-stats">
+                <span class="yf-total">总计 ${s.total}</span>
+                <span class="yf-normal">普通 ×1 · ${s.normal}</span>
+                <span class="yf-truelove">真爱 ×2 · ${s.trueLove}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      app.innerHTML = html;
+      window.scrollTo(0, 0);
+    }
+    // ==================== PMT 2026 赛事专区 ====================
+
+    // 1. 预选
+    function showPMT2026Preview() {
+      // 提取的完整 64 人预选成绩单
+      const previewData = [
+        { rank: 1, name: "Xtrrrffusion", id: "@Strrrffe", score: "51.7000", songs: [{ title: "QZKago Requiem [AT]", rks: 17.4000, score: 1000000 }, { title: "Stardust:RAY [AT]", rks: 17.2000, score: 1000000 }, { title: "Hydra [AT]", rks: 17.1000, score: 1000000 }] },
+        { rank: 2, name: "awalineUwU", id: "@awaline_UwU", score: "51.7000", songs: [{ title: "QZKago Requiem [AT]", rks: 17.4000, score: 1000000 }, { title: "Hydra [AT]", rks: 17.1000, score: 1000000 }, { title: "Stardust:RAY [AT]", rks: 17.2000, score: 1000000 }] },
+        { rank: 3, name: "★来和我van游戏★", id: "@来和我van游戏", score: "51.6686", songs: [{ title: "Stardust:RAY [AT]", rks: 17.2000, score: 1000000 }, { title: "QZKago Requiem [AT]", rks: 17.3686, score: 999594 }, { title: "Hydra [AT]", rks: 17.1000, score: 1000000 }] },
+        { rank: 4, name: "PX_C₈H₁₀", id: "@PX_C8H10", score: "51.6173", songs: [{ title: "Hydra [AT]", rks: 17.1000, score: 1000000 }, { title: "QZKago Requiem [AT]", rks: 17.4000, score: 1000000 }, { title: "Stardust:RAY [AT]", rks: 17.1173, score: 998917 }] },
+        { rank: 5, name: "Star71", id: "@MondayStar71", score: "51.6162", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3843, score: 999797 }, { title: "Hydra [AT]", rks: 17.1000, score: 1000000 }, { title: "Stardust:RAY [AT]", rks: 17.1319, score: 999108 }] },
+        { rank: 6, name: "XietiaoC", id: "@XietiaoC", score: "51.5815", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3843, score: 999797 }, { title: "Stardust:RAY [AT]", rks: 17.1659, score: 999554 }, { title: "Hydra [AT]", rks: 17.0313, score: 999095 }] },
+        { rank: 7, name: "xeqonb", id: "@xxxeqonb", score: "51.5669", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3843, score: 999797 }, { title: "Hydra [AT]", rks: 17.0313, score: 999095 }, { title: "Stardust:RAY [AT]", rks: 17.1513, score: 999363 }] },
+        { rank: 8, name: "CN_115", id: "@沉默-_-微笑", score: "51.4900", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2902, score: 998578 }, { title: "Stardust:RAY [AT]", rks: 17.1489, score: 999331 }, { title: "Hydra [AT]", rks: 17.0509, score: 999354 }] },
+        { rank: 9, name: "伊地知虹夏", id: "@幽蓝边鸠awa", score: "51.4880", songs: [{ title: "Stardust:RAY [AT]", rks: 17.1343, score: 999140 }, { title: "QZKago Requiem [AT]", rks: 17.3395, score: 999217 }, { title: "Hydra [AT]", rks: 17.0142, score: 998869 }] },
+        { rank: 10, name: "666js已无敌", id: "@MSTdyzqYZQ", score: "51.4874", songs: [{ title: "Hydra [AT]", rks: 17.0657, score: 999548 }, { title: "Stardust:RAY [AT]", rks: 17.0688, score: 998280 }, { title: "QZKago Requiem [AT]", rks: 17.3529, score: 999391 }] },
+        { rank: 11, name: "nf_9", id: "@rrrOmuH", score: "51.4874", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3529, score: 999391 }, { title: "Stardust:RAY [AT]", rks: 17.0688, score: 998280 }, { title: "Hydra [AT]", rks: 17.0657, score: 999548 }] },
+        { rank: 12, name: "Ca12nia.", id: "@kuiyue112", score: "51.4850", songs: [{ title: "Stardust:RAY [AT]", rks: 17.1659, score: 999554 }, { title: "QZKago Requiem [AT]", rks: 17.3686, score: 999594 }, { title: "Hydra [AT]", rks: 16.9505, score: 998028 }] },
+        { rank: 13, name: "henry_in_out", id: "@RinFall", score: "51.4807", songs: [{ title: "Hydra [AT]", rks: 17.1000, score: 1000000 }, { title: "Stardust:RAY [AT]", rks: 17.1489, score: 999331 }, { title: "QZKago Requiem [AT]", rks: 17.2164, score: 997620 }] },
+        { rank: 14, name: "IsxI", id: "@IsxI_", score: "51.4695", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3373, score: 999188 }, { title: "Stardust:RAY [AT]", rks: 17.0494, score: 998026 }, { title: "Hydra [AT]", rks: 17.0828, score: 999774 }] },
+        { rank: 15, name: "丰川祥子", id: "@猎宝若叶睦", score: "51.4552", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3238, score: 999013 }, { title: "Stardust:RAY [AT]", rks: 17.1149, score: 998885 }, { title: "Hydra [AT]", rks: 17.0166, score: 998901 }] },
+        { rank: 16, name: "喜多郁代", id: "@没有底力的菜", score: "51.4316", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3686, score: 999594 }, { title: "Stardust:RAY [AT]", rks: 17.0979, score: 998662 }, { title: "Hydra [AT]", rks: 16.9651, score: 998222 }] },
+        { rank: 17, name: "退赛没空", id: "@TSmK_X_X", score: "51.4079", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2790, score: 998433 }, { title: "Stardust:RAY [AT]", rks: 17.1319, score: 999108 }, { title: "Hydra [AT]", rks: 16.9970, score: 998643 }] },
+        { rank: 18, name: "三角初华", id: "@bult_0509", score: "51.4039", songs: [{ title: "Hydra [AT]", rks: 17.0484, score: 999321 }, { title: "Stardust:RAY [AT]", rks: 17.0810, score: 998440 }, { title: "QZKago Requiem [AT]", rks: 17.2746, score: 998375 }] },
+        { rank: 19, name: "潇洒雨落April", id: "@潇洒雨落April", score: "51.3983", songs: [{ title: "Hydra [AT]", rks: 17.1000, score: 1000000 }, { title: "Stardust:RAY [AT]", rks: 17.2000, score: 1000000 }, { title: "QZKago Requiem [AT]", rks: 17.0983, score: 996082 }] },
+        { rank: 20, name: "菜哥", id: "@Cabbageix白菜", score: "51.3704", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2924, score: 998607 }, { title: "Stardust:RAY [AT]", rks: 17.0810, score: 998440 }, { title: "Hydra [AT]", rks: 16.9970, score: 998643 }] },
+        { rank: 21, name: "抑伤小指酱音游人", id: "@抑伤小指酱音游人", score: "51.3627", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3686, score: 999594 }, { title: "Stardust:RAY [AT]", rks: 16.9284, score: 996433 }, { title: "Hydra [AT]", rks: 17.0657, score: 999548 }] },
+        { rank: 22, name: "Teri0nse", id: "@EG_KS", score: "51.3627", songs: [{ title: "Hydra [AT]", rks: 17.1000, score: 1000000 }, { title: "Stardust:RAY [AT]", rks: 17.0663, score: 998248 }, { title: "QZKago Requiem [AT]", rks: 17.1964, score: 997359 }] },
+        { rank: 23, name: "ST_TY", id: "@ST_TLEY", score: "51.3512", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3238, score: 999013 }, { title: "Hydra [AT]", rks: 17.0313, score: 999095 }, { title: "Stardust:RAY [AT]", rks: 16.9961, score: 997325 }] },
+        { rank: 24, name: "Kevinotch", id: "@Kevinotch", score: "51.3501", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3843, score: 999797 }, { title: "Stardust:RAY [AT]", rks: 17.0325, score: 997803 }, { title: "Hydra [AT]", rks: 16.9334, score: 997802 }] },
+        { rank: 25, name: "d10c26", id: "@d10c26", score: "51.3238", songs: [{ title: "Stardust:RAY [AT]", rks: 17.0640, score: 998217 }, { title: "QZKago Requiem [AT]", rks: 17.2433, score: 997969 }, { title: "Hydra [AT]", rks: 17.0166, score: 998901 }] },
+        { rank: 26, name: "rs乱跑的种子", id: "@RS乱跑的种子_", score: "51.3212", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2746, score: 998375 }, { title: "Stardust:RAY [AT]", rks: 17.0325, score: 997803 }, { title: "Hydra [AT]", rks: 17.0142, score: 998869 }] },
+        { rank: 27, name: "rks16的fw", id: "@GT_rks17的fw", score: "51.2875", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9792, score: 997102 }, { title: "QZKago Requiem [AT]", rks: 17.2746, score: 998375 }, { title: "Hydra [AT]", rks: 17.0337, score: 999127 }] },
+        { rank: 28, name: "祐天寺若麦", id: "@文文文文轩猕猴桃", score: "51.2775", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9961, score: 997325 }, { title: "Hydra [AT]", rks: 17.0828, score: 999774 }, { title: "QZKago Requiem [AT]", rks: 17.1986, score: 997388 }] },
+        { rank: 29, name: "Ke1y", id: "@RE_HoShiNO", score: "51.2712", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9622, score: 996879 }, { title: "Hydra [AT]", rks: 17.0657, score: 999548 }, { title: "QZKago Requiem [AT]", rks: 17.2433, score: 997969 }] },
+        { rank: 30, name: "Icerd", id: "@Icerd-ToT", score: "51.2632", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9622, score: 996879 }, { title: "QZKago Requiem [AT]", rks: 17.3529, score: 999391 }, { title: "Hydra [AT]", rks: 16.9480, score: 997996 }] },
+        { rank: 31, name: "RainPromise", id: "@光反_GF", score: "51.2622", songs: [{ title: "Stardust:RAY [AT]", rks: 17.1319, score: 999108 }, { title: "QZKago Requiem [AT]", rks: 17.1652, score: 996953 }, { title: "Hydra [AT]", rks: 16.9651, score: 998222 }] },
+        { rank: 32, name: "MSTd已无敌", id: "@执笔写墨丶", score: "51.2589", songs: [{ title: "Stardust:RAY [AT]", rks: 17.1173, score: 998917 }, { title: "QZKago Requiem [AT]", rks: 17.3059, score: 998781 }, { title: "Hydra [AT]", rks: 16.8357, score: 996509 }] },
+        { rank: 33, name: "果林", id: "@Fruit_forest", score: "51.2471", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3059, score: 998781 }, { title: "Stardust:RAY [AT]", rks: 17.0470, score: 997994 }, { title: "Hydra [AT]", rks: 16.8943, score: 997285 }] },
+        { rank: 34, name: "Nameless1058", id: "@Nameless1058", score: "51.2195", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2612, score: 998201 }, { title: "Stardust:RAY [AT]", rks: 17.0470, score: 997994 }, { title: "Hydra [AT]", rks: 16.9114, score: 997511 }] },
+        { rank: 35, name: "-DESTRUCTION-", id: "@一只DESTRUCTIONowo", score: "51.2176", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9647, score: 996911 }, { title: "Hydra [AT]", rks: 16.9627, score: 998190 }, { title: "QZKago Requiem [AT]", rks: 17.2902, score: 998578 }] },
+        { rank: 36, name: "好哥哥哦耶", id: "@好哥哥哦耶", score: "51.2172", songs: [{ title: "Hydra [AT]", rks: 16.9456, score: 997964 }, { title: "Stardust:RAY [AT]", rks: 16.9792, score: 997102 }, { title: "QZKago Requiem [AT]", rks: 17.2924, score: 998607 }] },
+        { rank: 37, name: "蛋黄芝士春晖", id: "@春晖awa", score: "51.2119", songs: [{ title: "Hydra [AT]", rks: 16.8943, score: 997285 }, { title: "Stardust:RAY [AT]", rks: 16.9961, score: 997325 }, { title: "QZKago Requiem [AT]", rks: 17.3215, score: 998984 }] },
+        { rank: 38, name: "MT_Flow心流", id: "@MT_Flow_心流", score: "51.2057", songs: [{ title: "Stardust:RAY [AT]", rks: 17.0131, score: 997548 }, { title: "QZKago Requiem [AT]", rks: 17.2299, score: 997795 }, { title: "Hydra [AT]", rks: 16.9627, score: 998190 }] },
+        { rank: 39, name: "苦笔中学牲", id: "@bili_7466QAQ", score: "51.2007", songs: [{ title: "Hydra [AT]", rks: 16.8503, score: 996703 }, { title: "Stardust:RAY [AT]", rks: 17.0131, score: 997548 }, { title: "QZKago Requiem [AT]", rks: 17.3373, score: 999188 }] },
+        { rank: 40, name: "GT_奖牌被偷的不哈", id: "@不哈bh", score: "51.1974", songs: [{ title: "QZKago Requiem [AT]", rks: 17.1340, score: 996547 }, { title: "Stardust:RAY [AT]", rks: 17.0640, score: 998217 }, { title: "Hydra [AT]", rks: 16.9994, score: 998675 }] },
+        { rank: 41, name: "QuietusRay", id: "@QuietusRay", score: "51.1866", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9284, score: 996433 }, { title: "Hydra [AT]", rks: 16.9970, score: 998643 }, { title: "QZKago Requiem [AT]", rks: 17.2612, score: 998201 }] },
+        { rank: 42, name: "MOYK_28", id: "@MOYK_28", score: "51.1800", songs: [{ title: "QZKago Requiem [AT]", rks: 17.1362, score: 996576 }, { title: "Stardust:RAY [AT]", rks: 17.0640, score: 998217 }, { title: "Hydra [AT]", rks: 16.9798, score: 998416 }] },
+        { rank: 43, name: "二咪毛", id: "@二咪毛", score: "51.1346", songs: [{ title: "Stardust:RAY [AT]", rks: 17.0131, score: 997548 }, { title: "QZKago Requiem [AT]", rks: 17.2589, score: 998172 }, { title: "Hydra [AT]", rks: 16.8626, score: 996865 }] },
+        { rank: 44, name: "Cuheng", id: "@殂珩", score: "51.1064", songs: [{ title: "Hydra [AT]", rks: 16.9651, score: 998222 }, { title: "Stardust:RAY [AT]", rks: 16.8488, score: 995382 }, { title: "QZKago Requiem [AT]", rks: 17.2924, score: 998607 }] },
+        { rank: 45, name: "ptrb", id: "@_p0tato-", score: "51.1039", songs: [{ title: "Hydra [AT]", rks: 16.8943, score: 997285 }, { title: "Stardust:RAY [AT]", rks: 17.0979, score: 998662 }, { title: "QZKago Requiem [AT]", rks: 17.1118, score: 996257 }] },
+        { rank: 46, name: "九段不合格", id: "@九段不合格", score: "51.1006", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2478, score: 998027 }, { title: "Stardust:RAY [AT]", rks: 16.8705, score: 995669 }, { title: "Hydra [AT]", rks: 16.9823, score: 998449 }] },
+        { rank: 47, name: "青泽XTDY", id: "@协调不好的XTDY", score: "51.0974", songs: [{ title: "Stardust:RAY [AT]", rks: 16.8488, score: 995382 }, { title: "Hydra [AT]", rks: 16.9114, score: 997511 }, { title: "QZKago Requiem [AT]", rks: 17.3373, score: 999188 }] },
+        { rank: 48, name: "肥皂泡哦", id: "@肥皂泡哦", score: "51.0880", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9453, score: 996656 }, { title: "Hydra [AT]", rks: 16.9285, score: 997738 }, { title: "QZKago Requiem [AT]", rks: 17.2142, score: 997591 }] },
+        { rank: 49, name: "裴秀", id: "@GT_DelovomENT", score: "51.0713", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3238, score: 999013 }, { title: "Stardust:RAY [AT]", rks: 16.8825, score: 995828 }, { title: "Hydra [AT]", rks: 16.8650, score: 996897 }] },
+        { rank: 50, name: "德谟Demo", id: "@德谟Demo_", score: "51.0686", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9961, score: 997325 }, { title: "QZKago Requiem [AT]", rks: 17.1073, score: 996199 }, { title: "Hydra [AT]", rks: 16.9651, score: 998222 }] },
+        { rank: 51, name: "ly07", id: "@_ly07_", score: "51.0655", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3373, score: 999188 }, { title: "Stardust:RAY [AT]", rks: 16.8657, score: 995605 }, { title: "Hydra [AT]", rks: 16.8626, score: 996865 }] },
+        { rank: 52, name: "FiXCLE", id: "@FiXCLE", score: "51.0594", songs: [{ title: "QZKago Requiem [AT]", rks: 17.0805, score: 995850 }, { title: "Stardust:RAY [AT]", rks: 16.9647, score: 996911 }, { title: "Hydra [AT]", rks: 17.0142, score: 998869 }] },
+        { rank: 53, name: "1ssuE*", id: "@Detronis_Jr", score: "51.0565", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9647, score: 996911 }, { title: "QZKago Requiem [AT]", rks: 17.2634, score: 998230 }, { title: "Hydra [AT]", rks: 16.8284, score: 996412 }] },
+        { rank: 54, name: "CN_114", id: "@烟茶猫猫", score: "51.0525", songs: [{ title: "QZKago Requiem [AT]", rks: 17.3081, score: 998810 }, { title: "Stardust:RAY [AT]", rks: 16.9622, score: 996879 }, { title: "Hydra [AT]", rks: 16.7821, score: 995798 }] },
+        { rank: 55, name: "小刘子", id: "@有个人叫小刘子", score: "51.0400", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9647, score: 996911 }, { title: "Hydra [AT]", rks: 16.9970, score: 998643 }, { title: "QZKago Requiem [AT]", rks: 17.0783, score: 995821 }] },
+        { rank: 56, name: "Ling-578", id: "@Ling_578", score: "51.0388", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2299, score: 997795 }, { title: "Stardust:RAY [AT]", rks: 16.8633, score: 995573 }, { title: "Hydra [AT]", rks: 16.9456, score: 997964 }] },
+        { rank: 57, name: "白雷切享受者ReAlms_zwz", id: "@ReAlms_zwz", score: "51.0343", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9792, score: 997102 }, { title: "QZKago Requiem [AT]", rks: 17.1095, score: 996228 }, { title: "Hydra [AT]", rks: 16.9456, score: 997964 }] },
+        { rank: 58, name: "山田凉", id: "@-雨-时-", score: "51.0341", songs: [{ title: "QZKago Requiem [AT]", rks: 17.2277, score: 997766 }, { title: "Hydra [AT]", rks: 16.9456, score: 997964 }, { title: "Stardust:RAY [AT]", rks: 16.8608, score: 995541 }] },
+        { rank: 59, name: "Yilin", id: "@Yilinnn_n", score: "51.0329", songs: [{ title: "Stardust:RAY [AT]", rks: 17.0470, score: 997994 }, { title: "QZKago Requiem [AT]", rks: 17.0917, score: 995995 }, { title: "Hydra [AT]", rks: 16.8943, score: 997285 }] },
+        { rank: 60, name: "TempestE324", id: "@TempestE324", score: "51.0300", songs: [{ title: "Stardust:RAY [AT]", rks: 16.9622, score: 996879 }, { title: "QZKago Requiem [AT]", rks: 17.1051, score: 996170 }, { title: "Hydra [AT]", rks: 16.9627, score: 998190 }] },
+        { rank: 61, name: "Come on,0.01", id: "@ComeOn0丶01", score: "51.0192", songs: [{ title: "Hydra [AT]", rks: 17.0142, score: 998869 }, { title: "Stardust:RAY [AT]", rks: 16.9622, score: 996879 }, { title: "QZKago Requiem [AT]", rks: 17.0428, score: 995357 }] },
+        { rank: 62, name: "APaTaSuYuE", id: "@APaTaSuYuE", score: "51.0075", songs: [{ title: "Hydra [AT]", rks: 17.1000, score: 1000000 }, { title: "BANGING STRIKE [AT]", rks: 16.6933, score: 998569 }, { title: "QZKago Requiem [AT]", rks: 17.2142, score: 997591 }] },
+        { rank: 63, name: "4648315", id: "@4648315", score: "51.0042", songs: [{ title: "Stardust:RAY [AT]", rks: 16.8608, score: 995541 }, { title: "QZKago Requiem [AT]", rks: 17.1808, score: 997156 }, { title: "Hydra [AT]", rks: 16.9627, score: 998190 }] },
+        { rank: 64, name: "Mika_XBR", id: "@Mika_XBR", score: "50.9976", songs: [{ title: "Stardust:RAY [AT]", rks: 17.0640, score: 998217 }, { title: "QZKago Requiem [AT]", rks: 17.1028, score: 996140 }, { title: "Hydra [AT]", rks: 16.8309, score: 996445 }] }
+      ];
+
+      let html = `
+        <a class="back-link" onclick="goHome()">← 返回主页</a>
+        <h1 class="page-title">PMT 2026 · 预选成绩单</h1>
+        <div class="pmt-preview-list">
+      `;
+
+      previewData.forEach((player, index) => {
+        let rankClass = "rank-normal";
+        if (player.rank === 1) rankClass = "rank-top3";
+        else if (player.rank === 2) rankClass = "rank-top8";
+        else if (player.rank === 3) rankClass = "rank-top16";
+
+        html += `
+          <div class="pmt-preview-card anim-item" style="--i: ${index}">
+            <div class="preview-left">
+              <span class="preview-rank ${rankClass}">#${player.rank}</span>
+            </div>
+            <div class="preview-right">
+              <div class="preview-header">
+                <div class="preview-info">
+                  <div class="preview-name">${player.name}</div>
+                  <div class="preview-id">${player.id}</div>
+                </div>
+                <div class="preview-score">${player.score}</div>
+              </div>
+              <div class="preview-body">
+        `;
+
+        player.songs.forEach(s => {
+          const match = s.title.match(/\[(.*?)\]/);
+          const diff = match ? match[1] : "";
+          const pureTitle = s.title.replace(/\[.*?\]/, '').trim();
+
+          html += `
+                <div class="preview-song-row">
+                  <div class="ps-title">
+                    ${pureTitle}
+                    <span class="ps-diff">[${diff}]</span>
+                    <span class="ps-rks">Lv.${Number(s.rks).toFixed(4)}</span>
+                  </div>
+                  <div class="ps-stats">
+                    <span class="ps-score">${s.score}</span>
+                    <span class="ps-rks-val">${Number(s.rks).toFixed(4)}</span>
+                  </div>
+                </div>
+          `;
+        });
+
+        html += `
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      app.innerHTML = html;
+      window.scrollTo(0, 0);
+    }
+    // 2. 排名 (64人最终得分榜)
+    function showPMT2026Rank() {
+      const rankData = [
+        { rank: 1, name: "Xtrrrffusion", id: "@Strrrffe", score: 51.7000 },
+        { rank: 2, name: "awalineUwU", id: "@awaline_UwU", score: 51.7000 },
+        { rank: 3, name: "★来和我van游戏★", id: "@来和我van游戏", score: 51.6686 },
+        { rank: 4, name: "PX_C₈H₁₀", id: "@PX_C8H10", score: 51.6173 },
+        { rank: 5, name: "Star71", id: "@MondayStar71", score: 51.6162 },
+        { rank: 6, name: "XietiaoC", id: "@XietiaoC", score: 51.5815 },
+        { rank: 7, name: "xeqonb", id: "@xxxeqonb", score: 51.5669 },
+        { rank: 8, name: "CN_115", id: "@沉默-_-微笑", score: 51.4900 },
+        { rank: 9, name: "伊地知虹夏", id: "@幽蓝边鸠awa", score: 51.4880 },
+        { rank: 10, name: "666js已无敌", id: "@MSTdyzqYZQ", score: 51.4874 },
+        { rank: 11, name: "nf_9", id: "@rrrOmuH", score: 51.4874 },
+        { rank: 12, name: "Ca12nia.", id: "@kuiyue112", score: 51.4850 },
+        { rank: 13, name: "henry_in_out", id: "@RinFall", score: 51.4807 },
+        { rank: 14, name: "IsxI", id: "@IsxI_", score: 51.4695 },
+        { rank: 15, name: "丰川祥子", id: "@猎宝若叶睦", score: 51.4552 },
+        { rank: 16, name: "喜多郁代", id: "@没有底力的菜", score: 51.4316 },
+        { rank: 17, name: "退赛没空", id: "@TSmK_X_X", score: 51.4079 },
+        { rank: 18, name: "三角初华", id: "@bult_0509", score: 51.4039 },
+        { rank: 19, name: "潇洒雨落April", id: "@潇洒雨落April", score: 51.3983 },
+        { rank: 20, name: "菜哥", id: "@Cabbageix白菜", score: 51.3704 },
+        { rank: 21, name: "抑伤小指酱音游人", id: "@抑伤小指酱音游人", score: 51.3627 },
+        { rank: 22, name: "Teri0nse", id: "@EG_KS", score: 51.3627 },
+        { rank: 23, name: "ST_TY", id: "@ST_TLEY", score: 51.3512 },
+        { rank: 24, name: "Kevinotch", id: "@Kevinotch", score: 51.3501 },
+        { rank: 25, name: "d10c26", id: "@d10c26", score: 51.3238 },
+        { rank: 26, name: "rs乱跑的种子", id: "@RS乱跑的种子_", score: 51.3212 },
+        { rank: 27, name: "rks16的fw", id: "@GT_rks17的fw", score: 51.2875 },
+        { rank: 28, name: "祐天寺若麦", id: "@文文文文轩猕猴桃", score: 51.2775 },
+        { rank: 29, name: "Ke1y", id: "@RE_HoShiNO", score: 51.2712 },
+        { rank: 30, name: "Icerd", id: "@Icerd-ToT", score: 51.2632 },
+        { rank: 31, name: "RainPromise", id: "@光反_GF", score: 51.2622 },
+        { rank: 32, name: "MSTd已无敌", id: "@执笔写墨丶", score: 51.2589 },
+        { rank: 33, name: "果林", id: "@Fruit_forest", score: 51.2471 },
+        { rank: 34, name: "Nameless1058", id: "@Nameless1058", score: 51.2195 },
+        { rank: 35, name: "-DESTRUCTION-", id: "@一只DESTRUCTIONowo", score: 51.2176 },
+        { rank: 36, name: "好哥哥哦耶", id: "@好哥哥哦耶", score: 51.2172 },
+        { rank: 37, name: "蛋黄芝士春晖", id: "@春晖awa", score: 51.2119 },
+        { rank: 38, name: "MT_Flow心流", id: "@MT_Flow_心流", score: 51.2057 },
+        { rank: 39, name: "苦笔中学牲", id: "@bili_7466QAQ", score: 51.2007 },
+        { rank: 40, name: "GT_奖牌被偷的不哈", id: "@不哈bh", score: 51.1974 },
+        { rank: 41, name: "QuietusRay", id: "@QuietusRay", score: 51.1866 },
+        { rank: 42, name: "MOYK_28", id: "@MOYK_28", score: 51.1800 },
+        { rank: 43, name: "二咪毛", id: "@二咪毛", score: 51.1346 },
+        { rank: 44, name: "Cuheng", id: "@殂珩", score: 51.1064 },
+        { rank: 45, name: "ptrb", id: "@_p0tato-", score: 51.1039 },
+        { rank: 46, name: "九段不合格", id: "@九段不合格", score: 51.1006 },
+        { rank: 47, name: "青泽XTDY", id: "@协调不好的XTDY", score: 51.0974 },
+        { rank: 48, name: "肥皂泡哦", id: "@肥皂泡哦", score: 51.0880 },
+        { rank: 49, name: "裴秀", id: "@GT_DelovomENT", score: 51.0713 },
+        { rank: 50, name: "德谟Demo", id: "@德谟Demo_", score: 51.0686 },
+        { rank: 51, name: "ly07", id: "@_ly07_", score: 51.0655 },
+        { rank: 52, name: "FiXCLE", id: "@FiXCLE", score: 51.0594 },
+        { rank: 53, name: "1ssuE*", id: "@Detronis_Jr", score: 51.0565 },
+        { rank: 54, name: "CN_114", id: "@烟茶猫猫", score: 51.0525 },
+        { rank: 55, name: "小刘子", id: "@有个人叫小刘子", score: 51.0400 },
+        { rank: 56, name: "Ling-578", id: "@Ling_578", score: 51.0388 },
+        { rank: 57, name: "白雷切享受者ReAlms_zwz", id: "@ReAlms_zwz", score: 51.0343 },
+        { rank: 58, name: "山田凉", id: "@-雨-时-", score: 51.0341 },
+        { rank: 59, name: "Yilin", id: "@Yilinnn_n", score: 51.0329 },
+        { rank: 60, name: "TempestE324", id: "@TempestE324", score: 51.0300 },
+        { rank: 61, name: "Come on,0.01", id: "@ComeOn0丶01", score: 51.0192 },
+        { rank: 62, name: "APaTaSuYuE", id: "@APaTaSuYuE", score: 51.0075 },
+        { rank: 63, name: "4648315", id: "@4648315", score: 51.0042 },
+        { rank: 64, name: "Mika_XBR", id: "@Mika_XBR", score: 50.9976 }
+      ];
+
+      let html = `
+        <a class="back-link" onclick="goHome()">← 返回主页</a>
+        <h1 class="page-title">PMT 2026 · 排名</h1>
+        <div class="pmt-rank-list">
+      `;
+      rankData.forEach((player, index) => {
+        let rankClass = "rank-normal";
+        if (player.rank <= 3) rankClass = "rank-top3";
+        else if (player.rank <= 8) rankClass = "rank-top8";
+        else if (player.rank <= 16) rankClass = "rank-top16";
+
+        html += `
+          <div class="pmt-rank-item anim-item" style="--i: ${index}">
+            <div class="pmt-rank-num ${rankClass}">#${player.rank}</div>
+            <div class="pmt-rank-info">
+              <div class="pmt-rank-name">${player.name}</div>
+              <div class="pmt-rank-id">${player.id}</div>
+            </div>
+            <div class="pmt-rank-score">${player.score.toFixed(4)}</div>
+          </div>
+        `;
+      });
+      html += `</div>`;
+      app.innerHTML = html;
+      window.scrollTo(0, 0);
+    }
+
+    // 3. 赛况 (淘汰赛对战全记录)
+    function showPMT2026Bracket() {
+      const bracketData = [
+        {
+          round: "64进32", groups: [
+            { groupName: "常规组A", players: [{ name: "Xtrrrffusion", id: "@Strrrffe", score: 3999727, status: "晋级" }, { name: "九段不合格", id: "@九段不合格", score: 3986815, status: "晋级" }, { name: "MSTd已无敌", id: "@执笔写墨丶", score: 3982045, status: "淘汰" }, { name: "MOYK_28", id: "@MOYK_28", score: 3976212, status: "淘汰" }], charts: [{ title: "DESTRUCTION 3,2,1 [AT]", scores: [1000000, 996030, 998391, 994635] }, { title: "sølips [IN]", scores: [1000000, 996631, 985018, 991002] }, { title: "Distorted Fate [AT]", scores: [999727, 994154, 998636, 992128] }, { title: "BANGING STRIKE [HD]", scores: [1000000, 1000000, 1000000, 998447] }] },
+            { groupName: "常规组B", players: [{ name: "RainPromise", id: "@光反_GF", score: 3996062, status: "晋级" }, { name: "XietiaoC", id: "@XietiaoC", score: 3989363, status: "晋级" }, { name: "抑伤小指酱音游人", id: "@抑伤小指酱音游人", score: 3982408, status: "淘汰" }, { name: "GT_奖牌被偷的不哈", id: "@不哈bh", score: 3979050, status: "淘汰" }], charts: [{ title: "Credits [AT]", scores: [1000000, 993652, 990125, 992006] }, { title: "Verrückt [IN]", scores: [999183, 997082, 999455, 998638] }, { title: "Compute It With... [IN]", scores: [998269, 999423, 992828, 993529] }, { title: "QZKago Requiem [IN]", scores: [998610, 999206, 1000000, 994877] }] },
+            { groupName: "常规组C", players: [{ name: "Cuheng", id: "@殂珩", score: 3987972, status: "晋级" }, { name: "Ca12nia.", id: "@kuiyue112", score: 3984807, status: "晋级" }, { name: "-DESTRUCTION-", id: "@一只DESTRUCTIONowo", score: 3980908, status: "淘汰" }, { name: "白雷切享受者ReAlms_zwz", id: "@ReAlms_zwz", score: 3979311, status: "淘汰" }], charts: [{ title: "Stardust:RAY [AT]", scores: [996019, 992739, 992134, 991561] }, { title: "Flutter Echo [IN]", scores: [993642, 999331, 999665, 995316] }, { title: "Diamond Dust [AT]", scores: [998617, 997497, 998847, 998155] }, { title: "幻影鬼魅 (PLEASE) [AT]", scores: [999694, 995240, 990262, 994279] }] },
+            { groupName: "常规组D", players: [{ name: "TempestE324", id: "@TempestE324", score: 3994113, status: "晋级" }, { name: "苦笔中学牲", id: "@bili_7466QAQ", score: 3991471, status: "晋级" }, { name: "伊地知虹夏", id: "@幽蓝边鸠awa", score: 3987365, status: "淘汰" }, { name: "FiXCLE", id: "@FiXCLE", score: 3979378, status: "淘汰" }], charts: [{ title: "雪降り ~雪が降っている~ [EZ]", scores: [1000000, 1000000, 993694, 1000000] }, { title: "Credits [AT]", scores: [998354, 997806, 996709, 993417] }, { title: "祈 -我ら神祖と共に歩む者なり- [AT]", scores: [999527, 996895, 996962, 992484] }, { title: "+ERABY+E CONNEC+10N [AT]", scores: [996232, 996770, 1000000, 993477] }] },
+            { groupName: "常规组E", players: [{ name: "IsxI", id: "@IsxI_", score: 3996405, status: "晋级" }, { name: "Ling-578", id: "@Ling_578", score: 3985853, status: "晋级" }, { name: "Nameless1058", id: "@Nameless1058", score: 3975325, status: "淘汰" }, { name: "4648315", id: "@4648315", score: 3968367, status: "淘汰" }], charts: [{ title: "DESTRUCTION 3,2,1 [AT]", scores: [1000000, 994592, 994013, 997167] }, { title: "幻影鬼魅 (PLEASE) [AT]", scores: [997904, 998821, 990175, 994498] }, { title: "Radiance [IN]", scores: [998501, 997901, 1000000, 979835] }, { title: "DevIAtiOn (short ver.) [IN]", scores: [1000000, 994539, 991137, 996867] }] },
+            { groupName: "常规组F", players: [{ name: "丰川祥子", id: "@猎宝若叶睦", score: 3995439, status: "晋级" }, { name: "潇洒雨落April", id: "@潇洒雨落April", score: 3992930, status: "晋级" }, { name: "三角初华", id: "@bult_0509", score: 3989983, status: "淘汰" }, { name: "ptrb", id: "@_p0tato-", score: 3987877, status: "淘汰" }], charts: [{ title: "DevIAtiOn (short ver.) [IN]", scores: [999687, 993509, 995748, 997851] }, { title: "Distorted Fate [AT]", scores: [995752, 999727, 996025, 995986] }, { title: "幻影鬼魅 (PLEASE) [AT]", scores: [1000000, 999694, 998210, 995808] }, { title: "NO x [EZ]", scores: [1000000, 1000000, 1000000, 998232] }] }
+          ]
+        },
+        {
+          round: "32进16", groups: [
+            { groupName: "常规组A", players: [{ name: "Xtrrrffusion", id: "@Strrrffe", score: 3997133, status: "晋级" }, { name: "TempestE324", id: "@TempestE324", score: 3994226, status: "晋级" }, { name: "MT_Flow心流", id: "@MT_Flow_心流", score: 3991986, status: "淘汰" }, { name: "rks16的fw", id: "@GT_rks17的fw", score: 3991007, status: "淘汰" }], charts: [{ title: "Spotlight [IN]", scores: [1000000, 996911, 999099, 999550] }, { title: "Shelter [IN]", scores: [999497, 999497, 1000000, 998563] }, { title: "Distorted Fate [AT]", scores: [998441, 997818, 995362, 997545] }, { title: "BANGING STRIKE [AT]", scores: [999195, 1000000, 997525, 995349] }] },
+            { groupName: "常规组B", players: [{ name: "Star71", id: "@MondayStar71", score: 3998697, status: "晋级" }, { name: "henry_in_out", id: "@RinFall", score: 3996040, status: "晋级" }, { name: "九段不合格", id: "@九段不合格", score: 3991062, status: "淘汰" }, { name: "苦笔中学牲", id: "@bili_7466QAQ", score: 3980173, status: "淘汰" }], charts: [{ title: "Alice in a xxxxxxxx [IN]", scores: [999620, 1000000, 995553, 993059] }, { title: "祈 -我ら神祖と共に歩む者なり- [AT]", scores: [999077, 998942, 997187, 995230] }, { title: "ぱぴぷぴぷぴぱ [IN]", scores: [1000000, 998029, 998632, 998311] }, { title: "sølips [IN]", scores: [1000000, 999069, 999690, 993573] }] },
+            { groupName: "常规组C", players: [{ name: "IsxI", id: "@IsxI_", score: 3998451, status: "晋级" }, { name: "666js已无敌", id: "@MSTdyzqYZQ", score: 3994461, status: "晋级" }, { name: "xeqonb", id: "@xxxeqonb", score: 3989440, status: "淘汰" }, { name: "肥皂泡哦", id: "@肥皂泡哦", score: 3983113, status: "淘汰" }], charts: [{ title: "Distorted Fate [AT]", scores: [999454, 999454, 997311, 991076] }, { title: "Xep+ion [IN]", scores: [998997, 998997, 997564, 997564] }, { title: "Incyde [IN]", scores: [1000000, 998513, 996390, 996663] }, { title: "Temporal Shifting [IN]", scores: [1000000, 997497, 998175, 997810] }] },
+            { groupName: "常规组D", players: [{ name: "awalineUwU", id: "@awaline_UwU", score: 3992245, status: "晋级" }, { name: "小刘子", id: "@有个人叫小刘子", score: 3990641, status: "晋级" }, { name: "Ling-578", id: "@Ling_578", score: 3987861, status: "淘汰" }, { name: "菜哥", id: "@Cabbageix白菜", score: 3981944, status: "淘汰" }], charts: [{ title: "QZKago Requiem [AT]", scores: [1000000, 993848, 992803, 991410] }, { title: "Inverted World [IN]", scores: [994207, 998720, 999573, 993598] }, { title: "DevIAtiOn (short ver.) [EZ]", scores: [998423, 1000000, 1000000, 998423] }, { title: "ストレイソウル・アラウンド [IN]", scores: [999615, 998073, 995485, 998513] }] }
+          ]
+        },
+        {
+          round: "16进8", groups: [
+            { groupName: "起始组A", players: [{ name: "Xtrrrffusion", id: "@Strrrffe", score: 2000000, status: "一胜" }, { name: "★来和我van游戏★", id: "@来和我van游戏", score: 1996241, status: "一负" }], charts: [{ title: "The Whole Rest [HD]", scores: [1000000, 997934] }, { title: "DevIAtiOn (short ver.) [HD]", scores: [1000000, 998307] }] },
+            { groupName: "起始组B", players: [{ name: "nf_9", id: "@rrrOmuH", score: 1999275, status: "一胜" }, { name: "PX_C₈H₁₀", id: "@PX_C8H10", score: 1998949, status: "一负" }], charts: [{ title: "DESTRUCTION 3,2,1 [AT]", scores: [999700, 998949] }, { title: "Incyde [IN]", scores: [999575, 1000000] }] },
+            { groupName: "起始组C", players: [{ name: "TempestE324", id: "@TempestE324", score: 1999238, status: "一胜" }, { name: "awalineUwU", id: "@awaline_UwU", score: 1999124, status: "一负" }], charts: [{ title: "A journey to the moonlight [IN]", scores: [1000000, 999124] }, { title: "Broken Sky [IN]", scores: [999238, 1000000] }] },
+            { groupName: "起始组D", players: [{ name: "IsxI", id: "@IsxI_", score: 1998901, status: "一胜" }, { name: "RainPromise", id: "@光反_GF", score: 1998456, status: "一负" }], charts: [{ title: "Helios [IN]", scores: [1000000, 999555] }, { title: "Hydra [AT]", scores: [998901, 998901] }] },
+            { groupName: "起始组E", players: [{ name: "CN_115", id: "@沉默-_-微笑", score: 1999546, status: "一胜" }, { name: "Star71", id: "@MondayStar71", score: 1999034, status: "一负" }], charts: [{ title: "bye [IN]", scores: [1000000, 999034] }, { title: "G.V.N. (Glitter,Vomitus and Neon) [IN]", scores: [999546, 1000000] }] },
+            { groupName: "起始组F", players: [{ name: "丰川祥子", id: "@猎宝若叶睦", score: 1999556, status: "一胜" }, { name: "666js已无敌", id: "@MSTdyzqYZQ", score: 1999295, status: "一负" }], charts: [{ title: "聖夜讃歌 [IN]", scores: [1000000, 999739] }, { title: "Xenolith [IN]", scores: [999556, 999556] }] },
+            { groupName: "起始组G", players: [{ name: "Teri0nse", id: "@EG_KS", score: 1997531, status: "一胜" }, { name: "小刘子", id: "@有个人叫小刘子", score: 1996558, status: "一负" }], charts: [{ title: "NO x [IN]", scores: [999130, 998217] }, { title: "Indelible Scar [IN]", scores: [998401, 998341] }] },
+            { groupName: "起始组H", players: [{ name: "喜多郁代", id: "@没有底力的菜", score: 1998202, status: "一胜" }, { name: "henry_in_out", id: "@RinFall", score: 1996361, status: "一负" }], charts: [{ title: "Retribution [IN]", scores: [998748, 996907] }, { title: "Distorted Fate [AT]", scores: [999454, 999454] }] },
+            { groupName: "一胜者组A", players: [{ name: "喜多郁代", id: "@没有底力的菜", score: 1998123, status: "二胜晋级" }, { name: "Xtrrrffusion", id: "@Strrrffe", score: 1997320, status: "一胜一负" }], charts: [{ title: "Distorted Fate [AT]", scores: [998675, 999727] }, { title: "Lyrith -迷宮リリス- [IN]", scores: [999448, 997593] }] },
+            { groupName: "一胜者组B", players: [{ name: "Teri0nse", id: "@EG_KS", score: 1999550, status: "二胜晋级" }, { name: "nf_9", id: "@rrrOmuH", score: 1997380, status: "一胜一负" }], charts: [{ title: "DESTRUCTION 3,2,1 [AT]", scores: [1000000, 999270] }, { title: "祈 -我ら神祖と共に歩む者なり- [AT]", scores: [999550, 998110] }] },
+            { groupName: "一胜者组C", players: [{ name: "TempestE324", id: "@TempestE324", score: 1999741, status: "二胜晋级" }, { name: "丰川祥子", id: "@猎宝若叶睦", score: 1999351, status: "一胜一负" }], charts: [{ title: "Alb [IN]", scores: [1000000, 999610] }, { title: "双重间谍 (Double Agent) [IN]", scores: [999741, 999741] }] },
+            { groupName: "一胜者组D", players: [{ name: "CN_115", id: "@沉默-_-微笑", score: 2000000, status: "二胜晋级" }, { name: "IsxI", id: "@IsxI_", score: 1999154, status: "一胜一负" }], charts: [{ title: "DevIAtiOn (short ver.) [HD]", scores: [1000000, 999154] }, { title: "TECHNOPOLIS 2085 [IN]", scores: [1000000, 1000000] }] },
+            { groupName: "一负者组A", players: [{ name: "henry_in_out", id: "@RinFall", score: 1998290, status: "一胜一负" }, { name: "★来和我van游戏★", id: "@来和我van游戏", score: 1997435, status: "二败淘汰" }], charts: [{ title: "祈 -我ら神祖と共に歩む者なり- [AT]", scores: [998290, 997435] }, { title: "valor/starcross [IN]", scores: [1000000, 1000000] }] },
+            { groupName: "一负者组B", players: [{ name: "PX_C₈H₁₀", id: "@PX_C8H10", score: 2000000, status: "一胜一负" }, { name: "小刘子", id: "@有个人叫小刘子", score: 1995000, status: "二败淘汰" }], charts: [{ title: "Helios [HD]", scores: [1000000, 1000000] }, { title: "NO x [IN]", scores: [1000000, 995000] }] },
+            { groupName: "一负者组C", players: [{ name: "Star71", id: "@MondayStar71", score: 1999285, status: "一胜一负" }, { name: "RainPromise", id: "@光反_GF", score: 1997240, status: "二败淘汰" }], charts: [{ title: "Diamond Dust [AT]", scores: [999539, 1000000] }, { title: "Re：End of a Dream [AT]", scores: [999746, 997240] }] },
+            { groupName: "一胜一负者组A", players: [{ name: "666js已无敌", id: "@MSTdyzqYZQ", score: 1999842, status: "二胜晋级" }, { name: "PX_C₈H₁₀", id: "@PX_C8H10", score: 1999370, status: "二败淘汰" }], charts: [{ title: "祈 -我ら神祖と共に歩む者なり- [AT]", scores: [999842, 999370] }, { title: "Quantum Hyperspace [IN]", scores: [1000000, 1000000] }] },
+            { groupName: "一胜一负者组B", players: [{ name: "Star71", id: "@MondayStar71", score: 1998948, status: "二胜晋级" }, { name: "henry_in_out", id: "@RinFall", score: 1998235, status: "二败淘汰" }], charts: [{ title: "KIZUNA Resolution [IN]", scores: [1000000, 999326] }, { title: "Distorted Fate [AT]", scores: [998948, 998909] }] },
+            { groupName: "一胜一负者组C", players: [{ name: "nf_9", id: "@rrrOmuH", score: 1999204, status: "二胜晋级" }, { name: "丰川祥子", id: "@猎宝若叶睦", score: 1996509, status: "二败淘汰" }], charts: [{ title: "Ποσειδών [AT]", scores: [999430, 1000000] }, { title: "Hydra [AT]", scores: [999774, 996509] }] },
+            { groupName: "一胜一负者组D", players: [{ name: "Xtrrrffusion", id: "@Strrrffe", score: 1999454, status: "二胜晋级" }, { name: "IsxI", id: "@IsxI_", score: 1998272, status: "二败淘汰" }], charts: [{ title: "Incyde [IN]", scores: [1000000, 999363] }, { title: "Distorted Fate [AT]", scores: [999454, 998909] }] }
+          ]
+        },
+        {
+          round: "决赛", groups: [
+            { groupName: "起始组A", players: [{ name: "Xtrrrffusion", id: "@Strrrffe", score: 1997911, status: "一胜" }, { name: "TempestE324", id: "@TempestE324", score: 1997682, status: "一败" }], charts: [{ title: "QZKago Requiem [AT]", scores: [998578, 998201] }, { title: "AbsoluTe disoRdeR [AT]", scores: [999333, 999481] }] },
+            { groupName: "起始组B", players: [{ name: "666js已无敌", id: "@MSTdyzqYZQ", score: 1991213, status: "一胜" }, { name: "nf_9", id: "@rrrOmuH", score: 1988277, status: "一败" }], charts: [{ title: "インマイマインド [IN]", scores: [991904, 988968] }, { title: "AbsoluTe disoRdeR [AT]", scores: [999309, 999309] }] },
+            { groupName: "起始组C", players: [{ name: "PX_C₈H₁₀", id: "@PX_C8H10", score: 1991077, status: "一胜" }, { name: "CN_115", id: "@沉默-_-微笑", score: 1988536, status: "一败" }], charts: [{ title: "幻影鬼魅 (PLEASE) [AT]", scores: [994934, 992358] }, { title: "彩 [IN]", scores: [996143, 996178] }] },
+            { groupName: "起始组D", players: [{ name: "Star71", id: "@MondayStar71", score: 1998220, status: "一胜" }, { name: "喜多郁代", id: "@没有底力的菜", score: 1995958, status: "一败" }], charts: [{ title: "Distorted Fate [AT]", scores: [998636, 997623] }, { title: "彼方へ、名もなき海辺より [IN]", scores: [999584, 998335] }] },
+            { groupName: "起始组C (重赛)", players: [{ name: "CN_115", id: "@沉默-_-微笑", score: 1995233, status: "一胜" }, { name: "PX_C₈H₁₀", id: "@PX_C8H10", score: 1992861, status: "一败" }], charts: [{ title: "幻影鬼魅 (PLEASE) [AT]", scores: [998777, 993799] }, { title: "彩 [IN]", scores: [996456, 999062] }] },
+            { groupName: "一胜者组A", players: [{ name: "666js已无敌", id: "@MSTdyzqYZQ", score: 1996644, status: "二胜" }, { name: "Xtrrrffusion", id: "@Strrrffe", score: 1995374, status: "一胜一负" }], charts: [{ title: "DESTRUCTION 3,2,1 [AT]", scores: [999099, 996738] }, { title: "Distorted Fate [AT]", scores: [997545, 998636] }] },
+            { groupName: "一胜者组B", players: [{ name: "Star71", id: "@MondayStar71", score: 2000000, status: "二胜" }, { name: "CN_115", id: "@沉默-_-微笑", score: 1989795, status: "一胜一负" }], charts: [{ title: "Re：End of a Dream [AT]", scores: [1000000, 996732] }, { title: "Secret Illumination [IN]", scores: [1000000, 993063] }] },
+            { groupName: "一负者组C", players: [{ name: "nf_9", id: "@rrrOmuH", score: 1998291, status: "一胜一负" }, { name: "TempestE324", id: "@TempestE324", score: 1997167, status: "二负淘汰" }], charts: [{ title: "Hydra [AT]", scores: [999321, 997317] }, { title: "DESTRUCTION 3,2,1 [AT]", scores: [998970, 999850] }] },
+            { groupName: "一负者组D", players: [{ name: "喜多郁代", id: "@没有底力的菜", score: 1993838, status: "一胜一负" }, { name: "PX_C₈H₁₀", id: "@PX_C8H10", score: 1992407, status: "二负淘汰" }], charts: [{ title: "Archidoxen [IN]", scores: [998881, 994190] }, { title: "NO x [IN]", scores: [994957, 998217] }] },
+            { groupName: "一胜一负者组A", players: [{ name: "Xtrrrffusion", id: "@Strrrffe", score: 1996551, status: "二胜一负" }, { name: "CN_115", id: "@沉默-_-微笑", score: 1995882, status: "二负淘汰" }], charts: [{ title: "bye [IN]", scores: [997172, 999517] }, { title: "sølips [IN]", scores: [999379, 996365] }] },
+            { groupName: "一胜一负者组B", players: [{ name: "喜多郁代", id: "@没有底力的菜", score: 1996924, status: "二胜一负" }, { name: "nf_9", id: "@rrrOmuH", score: 1994836, status: "二负淘汰" }], charts: [{ title: "DevIAtiOn (short ver.) [HD]", scores: [999154, 996614] }, { title: "Hydra [AT]", scores: [997770, 998222] }] },
+            { groupName: "二胜一负者组", players: [{ name: "喜多郁代", id: "@没有底力的菜", score: 1997812, status: "三胜一负" }, { name: "Xtrrrffusion", id: "@Strrrffe", score: 1995555, status: "二负淘汰" }], charts: [{ title: "iL-Artifact [IN]", scores: [998358, 999218] }, { title: "Distorted Fate [AT]", scores: [999454, 996337] }] },
+            { groupName: "二胜者组", players: [{ name: "Star71", id: "@MondayStar71", score: 4989980, status: "三胜" }, { name: "666js已无敌", id: "@MSTdyzqYZQ", score: 4983236, status: "二胜一负" }], charts: [{ title: "Incyde [IN]", scores: [999363, 998119] }, { title: "Stardust:RAY [AT]", scores: [999331, 998440] }, { title: "Lyrith -迷宮リリス- [IN]", scores: [1000000, 998619] }, { title: "+ERABY+E CONNEC+10N [AT]", scores: [997657, 998480] }, { title: "Gungnir Fracture [IN]", scores: [993629, 989578] }] },
+            { groupName: "半决赛组", players: [{ name: "喜多郁代", id: "@没有底力的菜", score: 4993002, status: "三胜一负" }, { name: "666js已无敌", id: "@MSTdyzqYZQ", score: 4987786, status: "季军" }], charts: [{ title: "DevIAtiOn (short ver.) [HD]", scores: [999154, 996191] }, { title: "祈 -我ら神祖と共に歩む者なり- [AT]", scores: [997345, 998425] }, { title: "黄金之城 (GOLD TOWN) [IN]", scores: [999592, 995333] }, { title: "Distorted Fate [AT]", scores: [999727, 998090] }, { title: "夢の降る日に [IN]", scores: [997184, 999747] }] },
+            { groupName: "决赛组", players: [{ name: "Star71", id: "@MondayStar71", score: 4987279, status: "冠军" }, { name: "喜多郁代", id: "@没有底力的菜", score: 4978056, status: "亚军" }], charts: [{ title: "Inverted World [IN]", scores: [1000000, 998720] }, { title: "Fractured Angel [IN]", scores: [1000000, 999031] }, { title: "Re：birth [HD]", scores: [997135, 1000000] }, { title: "ぱぴぷぴぷぴぱ [IN]", scores: [999437, 999437] }, { title: "Der Schneid [AT]", scores: [990707, 980868] }] }
+          ]
+        }
+      ];
+
+      let html = `
+        <a class="back-link" onclick="goHome()">← 返回主页</a>
+        <h1 class="page-title">PMT 2026 · 赛况</h1>
+        <div class="pmt-bracket-container">
+      `;
+
+      bracketData.forEach((roundData, rIndex) => {
+        html += `<h2 class="pmt-round-title anim-item" style="--i: ${rIndex}">${roundData.round}</h2>`;
+
+        roundData.groups.forEach((group, gIndex) => {
+          html += `
+            <div class="pmt-match-card anim-item" style="--i: ${gIndex}">
+              <div class="pmt-match-header">${group.groupName}</div>
+              <div class="pmt-match-body">
+                <!-- 选手得分区 -->
+                <div class="pmt-match-players">
+          `;
+          group.players.forEach(p => {
+            let statusClass = "";
+            if (p.status.includes("晋级") || p.status.includes("冠军")) statusClass = "status-win";
+            else if (p.status.includes("淘汰") || p.status.includes("亚军") || p.status.includes("季军")) statusClass = "status-lose";
+            else if (p.status.includes("胜")) statusClass = "status-win";
+            else if (p.status.includes("负")) statusClass = "status-lose";
+
+            html += `
+                  <div class="pmt-player-row">
+                    <div class="pmt-p-info">
+                      <span class="pmt-p-name">${p.name}</span>
+                      <span class="pmt-p-id">${p.id}</span>
+                    </div>
+                    <div class="pmt-p-stats">
+                      <span class="pmt-p-score">${p.score}</span>
+                      <span class="pmt-p-status ${statusClass}">${p.status}</span>
+                    </div>
+                  </div>
+            `;
+          });
+          html += `</div>`;
+
+          // 谱面详细得分表
+          html += `
+                <div class="pmt-match-charts">
+                  <table class="pmt-chart-table">
+                    <thead>
+                      <tr>
+                        <th>谱面</th>
+          `;
+          group.players.forEach(p => {
+            html += `<th>${p.name}</th>`;
+          });
+          html += `
+                      </tr>
+                    </thead>
+                    <tbody>
+          `;
+          group.charts.forEach(c => {
+            html += `<tr><td>${c.title}</td>`;
+            c.scores.forEach(s => {
+              html += `<td>${s}</td>`;
+            });
+            html += `</tr>`;
+          });
+          html += `
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      });
+
+      html += `</div>`;
+      app.innerHTML = html;
+      window.scrollTo(0, 0);
+    }
     // 启动！
     goHome();
+    // ==================== 全局侧边栏控制 ====================
+
+    function toggleSideNav() {
+      const panel = document.getElementById("side-nav-panel");
+      const trigger = document.getElementById("side-nav-trigger");
+
+      if (panel.classList.contains("open")) {
+        panel.classList.remove("open");
+        trigger.classList.remove("open");
+      } else {
+        panel.classList.add("open");
+        trigger.classList.add("open");
+      }
+    }
+
+    // 鼠标离开侧边栏时自动关闭
+    document.getElementById("side-nav-panel").addEventListener("mouseleave", () => {
+      const panel = document.getElementById("side-nav-panel");
+      const trigger = document.getElementById("side-nav-trigger");
+      panel.classList.remove("open");
+      trigger.classList.remove("open");
+    });
+
+    // 监听内容变化，自动生成侧边栏
+    const observer = new MutationObserver((mutations) => {
+      const navContent = document.getElementById("side-nav-content");
+      if (!navContent) return;
+
+      let navHtml = "";
+
+      // 1. 如果在 PMT 赛况页
+      const roundTitles = document.querySelectorAll(".pmt-round-title");
+      if (roundTitles.length > 0) {
+        navHtml += `<h4>PMT 赛程</h4>`;
+        roundTitles.forEach((title, idx) => {
+          const anchorId = `pmt-round-${idx}`;
+          title.id = anchorId;
+          navHtml += `<a onclick="document.getElementById('${anchorId}').scrollIntoView({behavior: 'smooth'})">${title.innerText}</a>`;
+        });
+      }
+
+      // 2. 如果在 曲目列表 页（通过判断是否有 chapter-row）
+      const chapterRows = document.querySelectorAll(".chapter-row");
+      const isChapterList = document.querySelector(".page-title") && document.querySelector(".page-title").innerText === "曲目列表";
+
+      if (isChapterList && chapterRows.length > 0) {
+        // 分类容器
+        let cats = {
+          main: [],
+          side: [],
+          ex: [],
+          other: [],
+          single: []
+        };
+
+        chapterRows.forEach((row, idx) => {
+          const nameEl = row.querySelector(".chapter-name");
+          const numEl = row.querySelector(".chapter-num");
+          const onclickStr = row.getAttribute("onclick");
+
+          if (nameEl && onclickStr) {
+            const name = nameEl.innerText;
+            const num = numEl ? numEl.innerText : "";
+
+            let cat = "main";
+            if (num.includes("Side Story")) cat = "side";
+            else if (num.includes("Chapter EX")) cat = "ex";
+            else if (num.includes("Other") || num.includes("Chapter Other")) cat = "other";
+            else if (num.includes("SP") || num.includes("愚人节")) cat = "other";
+            else if (num.includes("Single")) cat = "single";
+
+            cats[cat].push({ name, onclickStr });
+          }
+        });
+
+        // 渲染分类
+        if (cats.main.length > 0) {
+          navHtml += `<h4>主线章节</h4>`;
+          cats.main.forEach(item => navHtml += `<a onclick="${item.onclickStr}">${item.name}</a>`);
+        }
+        if (cats.side.length > 0) {
+          navHtml += `<h4>支线章节</h4>`;
+          cats.side.forEach(item => navHtml += `<a onclick="${item.onclickStr}">${item.name}</a>`);
+        }
+        if (cats.ex.length > 0) {
+          navHtml += `<h4>外传 / EX章节</h4>`;
+          cats.ex.forEach(item => navHtml += `<a onclick="${item.onclickStr}">${item.name}</a>`);
+        }
+        if (cats.other.length > 0) {
+          navHtml += `<h4>其他章节</h4>`;
+          cats.other.forEach(item => navHtml += `<a onclick="${item.onclickStr}">${item.name}</a>`);
+        }
+        if (cats.single.length > 0) {
+          navHtml += `<h4>单曲章节</h4>`;
+          cats.single.forEach(item => navHtml += `<a onclick="${item.onclickStr}">${item.name}</a>`);
+        }
+      }
+
+      // 如果有内容，显示触发器，否则隐藏
+      if (navHtml) {
+        navContent.innerHTML = navHtml;
+        document.getElementById("side-nav-trigger").style.display = "flex";
+      } else {
+        document.getElementById("side-nav-trigger").style.display = "none";
+        document.getElementById("side-nav-panel").classList.remove("open");
+        document.getElementById("side-nav-trigger").classList.remove("open");
+      }
+    });
+
+    // 监听 app 容器
+    observer.observe(document.getElementById("app"), { childList: true, subtree: true });
   </script>
 </body>
+
 </html>
